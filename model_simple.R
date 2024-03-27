@@ -25,7 +25,7 @@ dessinSol <- function(ic=c(M=0.01,C=0.8,P=1000), times=seq(1:100),func=interacti
                               s=0.49,
                               ca=-(3.21),
                               cb=3.65,
-                              kmax=0.5,
+                              kmax=17.745,
                               gamma = 0.8,
                               delta=4,557,
                               v=0.9877,
