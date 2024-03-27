@@ -10,6 +10,7 @@ interaction_coral <- function(t, vars, parms){
     dC <- r*Y*C - d*C - a*M*C  # dC/dt
     dP <- s*P*(1 - (P/(beta*(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y))))))) -f*P # dP/dt
     dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1)
+    
     print(paste("C",C))
     print(paste("R",R))
     print(paste("P",P))
@@ -21,12 +22,12 @@ interaction_coral <- function(t, vars, parms){
   })
 }
 
-dessinSol <- function(ic=c(M=0.5,C=0.5,P=1000,R=2), times=seq(1:10),func=interaction_coral, 
+dessinSol <- function(ic=c(M=0.3,C=0.3,P=600,R=2.5), times=seq(1:100),func=interaction_coral, 
                       parms=c(a=0.1,
-                              beta=10000,
+                              beta=1000,
                               d=0.44,
                               r=1,
-                              f=0.1,
+                              f=0.2,
                               s=0.49,
                               ca=-(3.21),
                               cb=3.65,
@@ -40,7 +41,9 @@ dessinSol <- function(ic=c(M=0.5,C=0.5,P=1000,R=2), times=seq(1:10),func=interac
   plot(x = times, y = soln[,"M"], type = "l", col = "blue",
        xlab = "Temps", ylab = "Données",ylim=c(0,1))
   lines(x = times, y = soln[,"C"], type = "l", col = "red")
-  lines(x = times, y = soln[,"P"]/10000, type = "l", col = "green")
+  lines(x = times, y = soln[,"P"]/parms[2], type = "l", col = "green")
+  #plot(x = times, y = soln[,"R"], type = "l", col = "pink",ylim=c(1,3))
+  
 }
 
 dessinSol()
