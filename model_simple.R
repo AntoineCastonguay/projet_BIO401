@@ -5,18 +5,18 @@ library(deSolve)
 interaction_coral <- function(t, vars, parms){
   with(as.list(c(parms, vars)), {
     # Modèle interaction coral
-    dY <- Y - M - C # dY/dt
+    Y <- 1 - M - C # dY/dt
     dM <- a*M*C - ((P/beta)*M/(M+Y)) + gamma*M*Y # dM/dt
     dC <- r*Y*C - d*C - a*M*C  # dC/dt
     dP <- s*P*(1 - (P/(beta*kmax))) - f*P # dP/dt
     
     # Résultat
-    res <- c(dY=dY, dM=dM, dC=dC, dP=dP)
+    res <- c(dM=dM, dC=dC, dP=dP)
     return(list(res))
   })
 }
 
-dessinSol <- function(ic=c(Y=100,M=50,C=50,P=100), times=seq(1:1000),func=interaction_coral, 
+dessinSol <- function(ic=c(M=0.01,C=0.8,P=1000), times=seq(1:100),func=interaction_coral, 
                       parms=c(a=0.1,
                               beta=1000,
                               d=0.44,
@@ -33,8 +33,9 @@ dessinSol <- function(ic=c(Y=100,M=50,C=50,P=100), times=seq(1:1000),func=intera
                               hE=0.01)) {
   soln <- ode(ic, times, func, parms)
   
-  #plot(x = times, y = soln[,"M"], type = "l", col = "blue",
-       # xlab = "Temps", ylab = "Données")
+  plot(x = times, y = soln[,"M"], type = "l", col = "blue",
+        xlab = "Temps", ylab = "Données")
+  lines(x = times, y = soln[,"C"], type = "l", col = "red")
 }
 
 dessinSol()
