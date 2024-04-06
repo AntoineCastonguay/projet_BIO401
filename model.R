@@ -9,7 +9,7 @@ interaction_coral <- function(t, vars, parms){
     # Modèle interaction coral
     Y <- 1 - M - C # dY/dt
     
-    dM <- (a/s)*M*C - (P*M/(M+Y)) + (gamma/s)*M*Y # dM/dt
+    dM <- (a/s)*M*C - ((1/s)*P*M/(M+Y)) + (gamma/s)*M*Y # dM/dt
     dC <- (r/s)*Y*C - (d/s)*C - (a/s)*M*C  # dC/dt
     dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f/s)*P # dP/dt
     dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1)
@@ -24,12 +24,12 @@ dessinSol <- function(ic=c(M=0.001,C=0.56,P=0.75,R=2), times=seq(1:100),func=int
                       parms=c(a=0.1,
                               d=0.44,
                               r=0.8,
-                              f=0.2,
+                              f=0.4,
                               s=0.49,
                               ca=-(3.21),
                               cb=3.65,
                               kmax=17.745,
-                              delta=4,557,
+                              delta=4.557,
                               v=0.9877,
                               hG=0.03,
                               hE=0.01,
@@ -88,30 +88,31 @@ interaction_coral2 <- function(t, vars, parms){
   with(as.list(c(parms, vars)), {
     # Modèle interaction coral
     Y <- 1 - M - C # dY/dt
-    R <- rug
+    #R <- rug
     
     dM <- a*M*C - ((P/beta)*M/(M+Y)) + gamma*M*Y # dM/dt
     dC <- r*Y*C - d*C - a*M*C  # dC/dt
     dP <- s*P*(1 - (P/(beta*(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y))))))) -f*P # dP/dt
+    dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1)
     
     # Résultat
-    res <- c(dM=dM, dC=dC, dP=dP)
+    res <- c(dM=dM, dC=dC, dP=dP, dR=dR)
     return(list(res))
   })
 }
 
-dessinSol2 <- function(ic=c(M=0.001,C=0.56,P=75), times=seq(1:100),func=interaction_coral2, 
+dessinSol2 <- function(ic=c(M=0.001,C=0.56,P=75,R=2), times=seq(1:100),func=interaction_coral2, 
                        parms=c(a=0.1,
                                beta=100,
                                gamma = 0.8,
                                d=0.44,
-                               r=1,
+                               r=0.8,
                                f=0.2,
                                s=0.49,
                                ca=-(3.21),
                                cb=3.65,
                                kmax=17.745,
-                               delta=4,557,
+                               delta=4.557,
                                v=0.9877,
                                hG=0.03,
                                hE=0.01,
@@ -164,3 +165,48 @@ image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(100),zlim = c(0,0.56)
 
 image(1:nrow(algue), 1:ncol(algue), t(algue), col = plasma(100),
       xlab = "X", ylab = "Y", main = "Graphique avec couleurs basées sur les valeurs de la matrice",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
+
+
+# Partie 3
+interaction_coral3 <- function(t, vars, parms){
+  with(as.list(c(parms, vars)), {
+    # Modèle interaction coral
+    Y <- 1 - M - C # dY/dt
+    
+    dM <- (a/s)*M*C - (P*M/(M+Y)) + (gamma/s)*M*Y # dM/dt
+    dC <- (r/s)*Y*C - (d/s)*C - (a/s)*M*C  # dC/dt
+    dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f/s)*P # dP/dt
+    dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1)
+    
+    # Résultat
+    res <- c(dM=dM, dC=dC, dP=dP, dR=dR)
+    return(list(res))
+  })
+}
+
+dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.75,R=2), times=seq(1:100),func=interaction_coral3, 
+                      parms=c(a=0.1,
+                              d=0.44,
+                              r=0.8,
+                              f=0.2,
+                              s=0.49,
+                              ca=-(3.21),
+                              cb=3.65,
+                              kmax=17.745,
+                              delta=4,557,
+                              v=0.9877,
+                              hG=0.03,
+                              hE=0.01,
+                              gamma = 0.8)) {
+  soln <- ode(ic, times, func, parms)
+  
+  plot(x = times, y = soln[,"M"], type = "l", col = "blue",
+       xlab = "Temps", ylab = "Données",ylim=c(0,1))
+  lines(x = times, y = soln[,"C"], type = "l", col = "red")
+  lines(x = times, y = soln[,"P"], type = "l", col = "green")
+  
+  return(c(soln[100,"C"],soln[100,"M"]))
+  
+}
+
+dessinSol3()
