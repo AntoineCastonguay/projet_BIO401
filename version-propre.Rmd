@@ -1,0 +1,48 @@
+---
+title: "Projet BIO401"
+author: "AmigoTeam"
+date: "2024-04-07"
+output: html_document
+---
+
+Partie 1 :
+
+Question biologique : 
+
+Est ce que la résilience des récifs coraliens est suffisante pour lutter contre les facteur de stress tels que la surpeche et les tempetes? 
+ou
+Quel est la limite de résilience des récif coralien pour lutter contre les facteur de stress tels que la surpeche et les tempetes? 
+
+Hypothèse :
+
+Elle est suffisante jusqu'à une certaine limite qui dépend beaucoup de la complexité du corail, le l'effort de peche et de l'impact aléatoire des ouragans.
+
+Données :  
+
+| Paramètre | Valeur | Définition |
+|--|--|--|
+| s | 0.49 | Taux de croissance du parrofish par année |
+| a | 0.1 | Taux pour lequel les macroalgues remplace le corail par année |
+| r | 1,0.8 | Taux pour lequel le corail remplace le gazon d'algue par année |
+| d | 0.44 | Taux de mortalité du corail |
+| f | variable | Effort de pêche en pourcentage |
+| c1,c2 | 3.65,-3.21 | Détermine la relation entre la complexité du corail et la capacité de support du parrofish |
+| Alpha | 1 | Taux de broutage maximale par le parrofish |
+| Beta | variable | capacité de support du parrofish |
+| delta,v | 4.557,0.9877 | Détermine la relation entre la nourriture disponible et la capacité de support du parrofish |
+| gamma | 1.6,0.8 | Taux pour lequel les macroalgues remplace le gazon d'algue par année |
+| mH | 0.8 | Taux de mortalité des macroalgues suite a un ouragan |
+| hG | 0.03 | Rétablissement de la complexité du corail |
+| hE | 0.01 | Érosion de la complexité du corail |
+| kmax | 17.745 | Limite supérieure d'abondance des parrofishs |
+
+
+Méthode :
+
+Supposition :
+
+Calcul :
+
+Résultat :
+
+Interprétation : 
