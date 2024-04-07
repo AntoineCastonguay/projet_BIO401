@@ -20,11 +20,11 @@ interaction_coral <- function(t, vars, parms){
   })
 }
 
-dessinSol <- function(ic=c(M=0.001,C=0.56,P=0.75,R=2), times=seq(1:100),func=interaction_coral, 
+dessinSol <- function(ic=c(M=0.001,C=0.75,P=0.95,R=2), times=seq(1:100),func=interaction_coral, 
                       parms=c(a=0.1,
                               d=0.44,
                               r=0.8,
-                              f=0.4,
+                              f=0.3,
                               s=0.49,
                               ca=-(3.21),
                               cb=3.65,
