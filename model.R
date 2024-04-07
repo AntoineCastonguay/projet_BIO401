@@ -193,7 +193,7 @@ dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.75,R=2), times=seq(1:100),func=in
                               ca=-(3.21),
                               cb=3.65,
                               kmax=17.745,
-                              delta=4,557,
+                              delta=4.557,
                               v=0.9877,
                               hG=0.03,
                               hE=0.01,
