@@ -117,15 +117,10 @@ corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1){
   return(tail(vecC,1))
 }
 
-
 corailstochastique(R0=2.4, f= 0.58, lambda = 1/30,impact = 2,dt=0.1)
-
-
-
 
 matC <- matrix(0, nrow = 41,ncol = 51)
 matsd <- matrix(0, nrow = 41,ncol = 51)
-
 
 for (i in 1:41) {
   for (j in 1:51){
@@ -141,7 +136,6 @@ for (i in 1:41) {
   }
 }
 
-
 library(fields)
 
 # mat<-matrix(0,nrow = 61,ncol = 51)
@@ -154,6 +148,9 @@ y_values <- seq(1, 3, length.out = nrow(matC))
 
 # Plot the matrix as an image with different colored pixels
 image.plot(x = x_values, y = y_values, t(matC), col = viridis(20), xlab = "X", ylab = "Y", main="")
+
+
+
 corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1){
   #on instaure une étendue de temps
   tmax <- 100
@@ -271,15 +268,10 @@ corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1){
   return(tail(vecC,1))
 }
 
-
 corailstochastique(R0=2.4, f= 0.58, lambda = 1/30,impact = 2,dt=0.1)
-
-
-
 
 matC <- matrix(0, nrow = 21,ncol = 26)
 matsd <- matrix(0, nrow = 21,ncol = 26)
-
 
 for (i in 1:21) {
   for (j in 1:26){
@@ -294,10 +286,6 @@ for (i in 1:21) {
     matsd[i,j]<-sd(res)
   }
 }
-
-
-#library(fields)
-
 
 x_values <- seq(0, 1, length.out = ncol(matC))
 y_values <- seq(1, 3, length.out = nrow(matC))
