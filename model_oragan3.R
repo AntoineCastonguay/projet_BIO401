@@ -7,8 +7,6 @@ interaction_coral <- function(t, vars, parms){
     Ra.R <- 0.5
     print(t)
     
-    ppois(1,lambda = 2)
-    
     if(runif(1) < (1-30*dt)){
       dq <- 1
       print("oragan")
