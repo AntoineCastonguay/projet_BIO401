@@ -6,7 +6,7 @@ corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1,graph=FALSE){
   to <- 0
   
   #on pose les valeurs de départ et les paramètres
-  C <- 0.56*0.8
+  C <- 0.56
   M <- 0.01
   Y <- 0.43
   R <- R0
@@ -14,7 +14,7 @@ corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1,graph=FALSE){
   a<-0.1
   g<-0.8
   d<-0.44
-  r<-0.8
+  r<-1
   f<-f
   s<-0.49
   ca<--(3.21)
@@ -117,10 +117,6 @@ corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1,graph=FALSE){
 }
 
 
-
-
-
-
 #les fonctions pour faire les images
 
 graph.imageC <- function(impact,freq,it=10,pas=0.1){
@@ -136,8 +132,9 @@ graph.imageC <- function(impact,freq,it=10,pas=0.1){
       res <- vector(length = 0)
       for (z in 1:it) {
         R1 <- i*0.1+0.9
-        f0 <- j*0.04-0.04
-        w <- corailstochastique(R0=R1,f=f0, lambda = l,impact = imp,dt=pas, graph = F)[1]
+        #f0 <- j
+        F0 <- j*0.04-0.04
+        w <- corailstochastique(R0=R1,f=0.2, lambda = l,impact = imp,dt=pas, graph = F)[1]
         res<-c(res,w)
       }
       matC[i,j]<-mean(res)

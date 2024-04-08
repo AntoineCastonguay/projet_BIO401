@@ -2,24 +2,12 @@ interaction_coral <- function(t, vars, parms){
   with(as.list(c(parms, vars)), {
     # Modèle interaction coral
     
-    #test <- sample(c(0.2,0.5,0.8),1,replace = T)
-    Ra.C <- 0.5
-    Ra.R <- 0.5
-    print(t)
-    
-    if(runif(1) < (1-30*dt)){
-      dq <- 1
-      print("oragan")
-    }else{
-      dq <- 0
-    }
-    
     Y <- 1 - M - C # dY/dt
     
-    dC <- ((r/s)*Y*C - (d/s)*C - (a/s)*M*C) - C*(Ra.C + 0.05*runif(1))*dq # dC/dt    
-    dM <- ((a/s)*M*C - ((1/s)*P*M/(M+Y)) + (gamma/s)*M*Y) - M*mh*dq# dM/dt
-    dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f/s)*P # dP/dt
-    dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1) - (R-1)*(Ra.R + 0.05*runif(1))*dq
+    dC <- (r/s)*Y*C - (d/s)*C - (a/s)*M*C
+    dM <- (a/s)*M*C - ((1/s)*P*M/(M+Y))
+    dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f/s)*P
+    dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1)
     
     # Résultat
     res <- c(dC=dC,dM=dM,dP=dP,dR=dR)

@@ -32,29 +32,30 @@ Données :
 | hG | 0.03 | Rétablissement de la complexité du corail par année |
 | hE | 0.01 | Érosion de la complexité du corail par année |
 | kmax | 17.745 | Limite supérieure d'abondance des parrofishs |
-| F | 0.0512 + 0.0176*te, 0 | La proportion de la couverture corallienne affectée par un ouragan respectivement fort/moyen et faible |
-| G | 0.5, F, 0.05 | La proportion attendue de rugosité affectée par les impacts des ouragans respectivement fort, moyen et faible |
+| F() | 0.0512 + 0.0176*te, 0 | La proportion de la couverture corallienne affectée par un ouragan respectivement fort/moyen et faible |
+| G() | 0.5, F, 0.05 | La proportion attendue de rugosité affectée par les impacts des ouragans respectivement fort, moyen et faible |
 | mH | 0.8 | Taux de mortalité des macroalgues suite a un ouragan |
 | te | varaible | Temps écouler depuis le dernier ouragan en année |
 | sigma | 0.05 | Écart maximale de la variabilité des impacts des oragans d'epsilon |
 | epsilon | entre 0 et 1 | Variable aléatoire suivant une distribution normale standard qui décrit la composante aléatoire des impacts des oragans sur le corail |
 
-| Paramètre | Valeur possible | Définition |
+| Variable | Valeur possible | Définition |
 |--|--|--|
-| R | entre 1 et 3 | Où 1 équivaut à un structrue des récif coralien parfaitement lisse et où 3 est un rugosité très pronnoncer rarement atteint qui équivaut a un récif corailien en tres bonne santé |
-| C | entre 0 et 1 | Où 1 est une couverture complete des corail et 0 l'extinction des corail |
-| M | entre 0 et 1 | Où 1 est une couverture complete des macroalgue et 0 l'extinction des macroalgue |
-| Y | entre 0 et 1 | Le gazon d'algue correspond a tout ce qui n'est pas corail et macroalgue |
-| P | entre 0 et 1 | Où 1 est lorsque la capacité de support maximale est atteind et 0 est l'extinction des parrofishs |
+| R | entre 1 et 3 | Correspond à la rugosité des recif corralien. Où 1 équivaut à une structrue parfaitement lisse et où 3 est un rugosité très pronnoncer rarement atteint qui équivaut a un récif corailien offrant une tres bonne qualité d'habitat. |
+| C | entre 0 et 1 | Correspond à la proportion de couverture du paysage par le corail. Où 1 est une couverture complete et où 0 est l'extinction des corail. |
+| M | entre 0 et 1 | Correspond à la proportion de couverture du paysage par les macroalgues. Où 1 est une couverture compete et où 0 est l'extinction des macroalgue. |
+| Y | entre 0 et 1 | Le gazon d'algue correspond a tout ce qui n'est pas corail et macroalgue. |
+| P | entre 0 et 1 | Correspond à la population des parrofishs. Où 1 est lorsque la capacité de support maximale est atteind et où 0 est l'extinction des parrofishs |
 
 Méthode :
 
 modele de base :  
 $\frac{dM}{dt} = aMC - \frac{g(P)M}{M + Y} - \gamma MY$  
 $\frac{dC}{dt} = rTC - dC - aMC$  
-$\frac{dP}{dt} = sP(1 - \frac{P}{\beta K(C)}) - fP$  
+$\frac{dP}{dt} = sP(1 - \frac{P}{\beta K(C)}) - sfP$  
 $\frac{dY}{dt} = 1 - M - C$  
 
+Où g(p) est :  
 $g(P) = \alpha (\frac{P}{\beta})$  
 si Beta est relatif donc 1  
 $g(P)= \alpha P$  
@@ -65,25 +66,136 @@ $K(M+T,R) = \frac{(c1R + c2)}{K_{max}}\frac{\delta(M+Y)}{1 + v(M+Y)}$
 Les changements lents de la rugosité, qui se produisent entre les ouragans et résultent de la production des coraux qui construisent les récifs et de la bioérosion, ont été intégrés au modèle.  
 $\frac{dR}{dt} = h_GC(3-R) - h_E(1-C)(R-1)$
 
-Modele améliorer :
+Modele améliorer :  
 $\frac{dM}{dt} = aMC - \frac{\alpha PM}{M + Y} - \gamma MY$  
 $\frac{dC}{dt} = rTC - dC - aMC$  
-$\frac{dP}{dt} = sP(1 - \frac{P}{K(M+T,R)} - fP$  
+$\frac{dP}{dt} = sP(1 - \frac{P}{K(M+T,R)} - sfP$  
 $\frac{dR}{dt} = h_GC(3-R) - h_E(1-C)(R-1)$  
 $\frac{dY}{dt} = 1 - M - C$  
 
-Mise en œuvre d'un ouragan stochastique:
-$dC = g_C(C,M,P,R,t)dt - c(F+\sigma \epsilon)dq$
-$dM = g_M(C,M,P,R,t)dt - Mm_Hdq$
-$dP = g_P(C,M,P,R,t)dt$
-$dR = g_R(C,M,P,R,t)dt - (R-1)(G + \sigma \epsilon)dq$
-où $g_C,g_M,g_P,g_R$ sont identique au patie correpondant du modele améliorer.
-où q est un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.
+Modele améliorer Nondimentionner:  
+$\frac{dM}{dt} = \frac{a}{s}MC - \frac{\frac{\alpha}{s}PM}{M + Y} - \frac{\gamma}{s} MY$  
+$\frac{dC}{dt} = \frac{r}{s}TC - \frac{d}{s}C - \frac{a}{s}MC$  
+$\frac{dP}{dt} = P(1 - \frac{P}{K(M+T,R)} - fP$  
+$\frac{dR}{dt} = h_GC(3-R) - h_E(1-C)(R-1)$  
+$\frac{dY}{dt} = 1 - M - C$  
+
+Mise en œuvre d'un ouragan stochastique:  
+$dC = g_C(C,M,P,R,t)dt - c(F+\sigma \epsilon)dq$  
+$dM = g_M(C,M,P,R,t)dt - Mm_Hdq$  
+$dP = g_P(C,M,P,R,t)dt$  
+$dR = g_R(C,M,P,R,t)dt - (R-1)(G + \sigma \epsilon)dq$  
+$dY = 1 - M - C$  
+où $g_C(C,M,P,R,t),g_M(C,M,P,R,t),g_P(C,M,P,R,t),g_R(C,M,P,R,t)$ sont des fonction qui represente le modele améliorer.  
+où q est un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.  
 
 Supposition :
+1. Aucun changement dans la température, la chimie de l'eau ou l'élévation du niveau de la mer est significatif sur l'echelle du temps étudier.
+2. Les perturbation des récif corail tel que les épidemie et le blanchiment des coraux ne sont pas pris en compte. 
+3. L'effort de pêche influence proportionnelement la dynamique de population parrofishs. 
+4. Les technique de pêche n'ont pas d'influence sur l'effort de peche.
+5. Après un oragan, la recolonisation du corail et des algues se fait rapidement.
+6. Les récifs revient à un équilibre semblable à celui d'avant l'ouragan en termes de structure et de composition.
+7. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des parrofishs.
+8. La distribution des coraux, des algues macroscopiques et des poissons perroquets sont homogene dans l'espace.
 
 Calcul :
+Analyse de la qualité de l'habitat et de l'exploitation du poisson-perroquet
+```{r}
+# Chargement de librairie
+library(deSolve)
+library(viridis)
+
+# Fonction pour le modele deterministe du l'interaction entre le corail, les marcoalgue et les parrofishs.
+interaction_coral3 <- function(t, vars, parms){
+  with(as.list(c(parms, vars)), {
+    
+    Y <- 1 - M - C # dY/dt
+    
+    dM <- (a/s)*M*C - ((1/s)*P*M/(M+Y)) + (gamma/s)*M*Y # dM/dt
+    dC <- (r/s)*Y*C - (d/s)*C - (a/s)*M*C  # dC/dt
+    dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f)*P # dP/dt
+    dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1) # dR/dt
+    
+    # Résultat
+    res <- c(dM=dM, dC=dC, dP=dP, dR=dR)
+    return(list(res))
+  })
+}
+
+# Fonction pour effectuer un simulation du modele
+dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.95,R=2), times=seq(1:30),func=interaction_coral3, 
+                      parms=c(a=0.1,
+                              d=0.44,
+                              r=1,
+                              f=0.2,
+                              s=0.49,
+                              ca=-(3.21),
+                              cb=3.65,
+                              kmax=17.745,
+                              delta=4.557,
+                              v=0.9877,
+                              hG=0.03,
+                              hE=0.01,
+                              gamma = 1.6)) {
+  soln <- ode(ic, times, func, parms)
+  
+  # plot(x = times, y = soln[,"M"], type = "l", col = "blue",
+  #      xlab = "Temps", ylab = "Données",ylim=c(0,1))
+  # lines(x = times, y = soln[,"C"], type = "l", col = "red")
+  # lines(x = times, y = soln[,"P"], type = "l", col = "green")
+  
+  return(soln[30,"C"])
+  
+}
+
+# Matrice des valeur finale de la proportion de corail apres "times" ans
+coral <- matrix(data = NA, nrow = 41, ncol = 41)
+
+# Boucle sur rugosité
+for (i in 1:41) {
+  fish <- (i - 1) * (1 / 40)  # Calcul de la valeur de fish
+  
+  # Boucle sur fish
+  for (j in 1:41) {
+    rugo <- 1 + (j - 1) * (2 / 40)  # Calcul de la valeur de rugosité
+    
+    # Appel de la fonction de simulation et mise à jour de la matrice coral
+    res <- dessinSol3(ic = c(M = 0.001, C = 0.56, P = 0.95, R=rugo),
+                      parms = c(a = 0.1, d = 0.44, r = 1, f = fish,
+                                s = 0.49, ca = -3.21, cb = 3.65, kmax = 17.745,
+                                delta = 4.557, v = 0.9877, hG = 0.03, hE = 0.01,gamma=1.6))
+    
+    # Attribut la dominance du corail, des macroalgue ou d'un équilibre apres time ans
+    if(res<0.001){
+      color.tag <- 0
+    }else if(res<0.55){
+      color.tag <- 0.5
+    }else{
+      color.tag <- 1
+    }
+    
+    #coral[j,i] <- res
+    coral[j,i] <- color.tag
+  }
+}
+```
+
 
 Résultat :
+
+```{r}
+# Définition des noms de lignes et de colonnes
+row_names <- paste(seq(1, 3, by = (2 / 40)))
+col_names <- paste(seq(0, 1, by = (1 / 40)))
+
+row.names(coral) <- row_names
+colnames(coral) <- col_names
+
+# Créer le graphique avec la matrice en tant que données
+image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(40),
+      xlab = "X", ylab = "Y", main = "Graphique",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
+```
+
 
 Interprétation : 
