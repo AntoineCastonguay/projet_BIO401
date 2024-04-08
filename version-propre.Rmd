@@ -252,7 +252,6 @@ for (j in seq(3,9,by=3)) {
 
 ```
 
-
 Résultat :
 
 ```{r}
