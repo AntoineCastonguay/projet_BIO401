@@ -94,10 +94,9 @@ Supposition :
 2. Les perturbation des récif corail tel que les épidemie et le blanchiment des coraux ne sont pas pris en compte. 
 3. L'effort de pêche influence proportionnelement la dynamique de population parrofishs. 
 4. Les technique de pêche n'ont pas d'influence sur l'effort de peche.
-5. Après un oragan, la recolonisation du corail et des algues se fait rapidement.
-6. Les récifs revient à un équilibre semblable à celui d'avant l'ouragan en termes de structure et de composition.
-7. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des parrofishs.
-8. La distribution des coraux, des algues macroscopiques et des poissons perroquets sont homogene dans l'espace.
+5. Après un oragan, le gazon d'algues colonise immédiatement tout l'espace libre.
+6. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des parrofishs.
+8. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
 
 Calcul :
 Analyse de la qualité de l'habitat et de l'exploitation du poisson-perroquet
@@ -111,20 +110,23 @@ interaction_coral3 <- function(t, vars, parms){
   with(as.list(c(parms, vars)), {
     
     Y <- 1 - M - C # dY/dt
+    R <- rug
     
     dM <- (a/s)*M*C - ((1/s)*P*M/(M+Y)) + (gamma/s)*M*Y # dM/dt
     dC <- (r/s)*Y*C - (d/s)*C - (a/s)*M*C  # dC/dt
     dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f)*P # dP/dt
-    dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1) # dR/dt
+    # dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1) # dR/dt
     
     # Résultat
-    res <- c(dM=dM, dC=dC, dP=dP, dR=dR)
+    #res <- c(dM=dM, dC=dC, dP=dP, dR=dR)
+    res <- c(dM=dM, dC=dC, dP=dP)
     return(list(res))
   })
 }
 
 # Fonction pour effectuer un simulation du modele
-dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.95,R=2), times=seq(1:30),func=interaction_coral3, 
+dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.95), 
+                       times=seq(1:30),func=interaction_coral3, 
                       parms=c(a=0.1,
                               d=0.44,
                               r=1,
@@ -137,7 +139,8 @@ dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.95,R=2), times=seq(1:30),func=int
                               v=0.9877,
                               hG=0.03,
                               hE=0.01,
-                              gamma = 1.6)) {
+                              gamma = 1.6,
+                              rug=2)) {
   soln <- ode(ic, times, func, parms)
   
   # plot(x = times, y = soln[,"M"], type = "l", col = "blue",
@@ -164,7 +167,8 @@ for (i in 1:41) {
     res <- dessinSol3(ic = c(M = 0.001, C = 0.56, P = 0.95, R=rugo),
                       parms = c(a = 0.1, d = 0.44, r = 1, f = fish,
                                 s = 0.49, ca = -3.21, cb = 3.65, kmax = 17.745,
-                                delta = 4.557, v = 0.9877, hG = 0.03, hE = 0.01,gamma=1.6))
+                                delta = 4.557, v = 0.9877, hG = 0.03, hE = 0.01,
+                                gamma=1.6,rug=rugo))
     
     # Attribut la dominance du corail, des macroalgue ou d'un équilibre apres time ans
     if(res<0.001){
