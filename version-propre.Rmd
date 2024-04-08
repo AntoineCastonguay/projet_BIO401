@@ -91,12 +91,11 @@ où q est un processus de saut de Poisson avec un taux de saut λ tel que dq = 0
 
 Supposition :
 1. Aucun changement dans la température, la chimie de l'eau ou l'élévation du niveau de la mer est significatif sur l'echelle du temps étudier.
-2. Les perturbation des récif corail tel que les épidemie et le blanchiment des coraux ne sont pas pris en compte. 
-3. L'effort de pêche influence proportionnelement la dynamique de population parrofishs. 
-4. Les technique de pêche n'ont pas d'influence sur l'effort de peche.
-5. Après un oragan, le gazon d'algues colonise immédiatement tout l'espace libre.
-6. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des parrofishs.
-8. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
+2. Les perturbations ou stresse des récifs coralliens autres que les ouragans, les impacts indirects de la pêche ou la compétition de l'espace avec les macroalgues ne sont pas pris en compte.  
+3. L'effort de pêche ont une influence proportionnelement de la dynamique de population parrofishs et est constant pour toute les années de la simulation. 
+4. Après un oragan, le gazon d'algues colonise immédiatement tout l'espace libre.
+5. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des parrofishs.
+6. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
 
 Calcul :
 Analyse de la qualité de l'habitat et de l'exploitation du poisson-perroquet
@@ -112,8 +111,8 @@ interaction_coral3 <- function(t, vars, parms){
     Y <- 1 - M - C # dY/dt
     R <- rug
     
-    dM <- (a/s)*M*C - ((1/s)*P*M/(M+Y)) + (gamma/s)*M*Y # dM/dt
-    dC <- (r/s)*Y*C - (d/s)*C - (a/s)*M*C  # dC/dt
+    dM <- (a*M*C - P*M/(M+Y) + gamma*M*Y)/s # dM/dt
+    dC <- (r*Y*C - d*C - a*M*C)/s  # dC/dt
     dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f)*P # dP/dt
     # dR <- hG*C*(3 - R) - hE*(1 - C)*(R - 1) # dR/dt
     
@@ -125,22 +124,22 @@ interaction_coral3 <- function(t, vars, parms){
 }
 
 # Fonction pour effectuer un simulation du modele
-dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.95), 
+dessinSol3 <- function(ic=c(M=0.001,C=0.56,P=0.75), 
                        times=seq(1:30),func=interaction_coral3, 
-                      parms=c(a=0.1,
-                              d=0.44,
-                              r=1,
-                              f=0.2,
-                              s=0.49,
-                              ca=-(3.21),
-                              cb=3.65,
-                              kmax=17.745,
-                              delta=4.557,
-                              v=0.9877,
-                              hG=0.03,
-                              hE=0.01,
-                              gamma = 1.6,
-                              rug=2)) {
+                       parms=c(a=0.1,
+                               d=0.44,
+                               r=1,
+                               f=0.2,
+                               s=0.49,
+                               ca=-(3.21),
+                               cb=3.65,
+                               kmax=17.745,
+                               delta=4.557,
+                               v=0.9877,
+                               hG=0.03,
+                               hE=0.01,
+                               gamma = 1.6,
+                               rug=2)) {
   soln <- ode(ic, times, func, parms)
   
   # plot(x = times, y = soln[,"M"], type = "l", col = "blue",
@@ -164,16 +163,16 @@ for (i in 1:41) {
     rugo <- 1 + (j - 1) * (2 / 40)  # Calcul de la valeur de rugosité
     
     # Appel de la fonction de simulation et mise à jour de la matrice coral
-    res <- dessinSol3(ic = c(M = 0.001, C = 0.56, P = 0.95, R=rugo),
+    res <- dessinSol3(ic = c(M = 0.001, C = 0.56, P = 0.95),
                       parms = c(a = 0.1, d = 0.44, r = 1, f = fish,
                                 s = 0.49, ca = -3.21, cb = 3.65, kmax = 17.745,
                                 delta = 4.557, v = 0.9877, hG = 0.03, hE = 0.01,
                                 gamma=1.6,rug=rugo))
     
     # Attribut la dominance du corail, des macroalgue ou d'un équilibre apres time ans
-    if(res<0.001){
+    if(res<0.0001){
       color.tag <- 0
-    }else if(res<0.55){
+    }else if(res<0.45){
       color.tag <- 0.5
     }else{
       color.tag <- 1
@@ -183,6 +182,74 @@ for (i in 1:41) {
     coral[j,i] <- color.tag
   }
 }
+```
+
+```{r}
+interaction_coral4 <- function(t, vars, parms){
+  with(as.list(c(parms, vars)), {
+    
+    Y <- 1 - M - C # dY/dt
+    R <- rug
+    
+    dM <- (a*M*C - P*M/(M+Y) + gamma*M*Y)/s # dM/dt
+    dC <- (r*Y*C - d*C - a*M*C)/s  # dC/dt
+    dP <- P*(1 - (P/(((ca+cb*R)/kmax)*((delta*(M+Y))/(1+v*(M+Y)))))) - (f)*P # dP/dt
+    
+    # Résultat
+    #res <- c(dM=dM, dC=dC, dP=dP, dR=dR)
+    res <- c(dM=dM, dC=dC, dP=dP)
+    return(list(res))
+  })
+}
+
+# Fonction pour effectuer un simulation du modele
+dessinSol4 <- function(ic=c(M=0.95,C=0.01,P=0.75), 
+                       times=seq(1:30),func=interaction_coral4, 
+                       parms=c(a=0.1,
+                               d=0.44,
+                               r=1,
+                               f=0.1,
+                               s=0.49,
+                               ca=-(3.21),
+                               cb=3.65,
+                               kmax=17.745,
+                               delta=4.557,
+                               v=0.9877,
+                               hG=0.03,
+                               hE=0.01,
+                               gamma = 0.8,
+                               rug=2.2)) {
+  soln <- ode(ic, times, func, parms)
+  
+  # plot(x = times, y = soln[,"M"], type = "l", col = "blue",
+  #      xlab = "Temps", ylab = "Données",ylim=c(0,1))
+  # lines(x = times, y = soln[,"C"], type = "l", col = "red")
+  # lines(x = times, y = soln[,"P"], type = "l", col = "green")
+  
+  return(soln[30,"C"])
+  
+}
+rug.vec <- c(1.2,1.6,2.4)
+fish.vec <- data.frame()
+for (j in seq(3,9,by=3)) {
+  for (i in 1:50) {
+    fish <- (i - 1) * (1 / 50)  # Calcul de la valeur de fish
+    res <- dessinSol4(ic = c(M = 0.3, C = 0.7, P = 0.75),
+                      parms = c(a = 0.1, d = 0.44, r = 1, f = fish,
+                                s = 0.49, ca = -3.21, cb = 3.65, kmax = 17.745,
+                                delta = 4.557, v = 0.9877, hG = 0.03, hE = 0.01,
+                                gamma=0.8,rug=rug.vec[j/3]))
+    res2 <- dessinSol4(ic = c(M = 0.7, C = 0.3, P = 0.75),
+                       parms = c(a = 0.1, d = 0.44, r = 1, f = fish,
+                                 s = 0.49, ca = -3.21, cb = 3.65, kmax = 17.745,
+                                 delta = 4.557, v = 0.9877, hG = 0.03, hE = 0.01,
+                                 gamma=0.8,rug=rug.vec[j/3]))
+    fish.vec[i,j-2] <- fish
+    fish.vec[i,j-1] <- res
+    fish.vec[i,j] <- res2
+  }
+}
+
 ```
 
 
@@ -201,5 +268,15 @@ image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(40),
       xlab = "X", ylab = "Y", main = "Graphique",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
 ```
 
+```{r}
+plot(x = fish.vec[,1], y = fish.vec[,2],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = "Graphique")
+lines(x = fish.vec[,1], y = fish.vec[,3])
+
+plot(x = fish.vec[,1], y = fish.vec[,5],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = "Graphique")
+lines(x = fish.vec[,1], y = fish.vec[,6])
+
+plot(x = fish.vec[,1], y = fish.vec[,8],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = "Graphique")
+lines(x = fish.vec[,1], y = fish.vec[,9])
+```
 
 Interprétation : 
