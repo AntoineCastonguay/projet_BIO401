@@ -67,4 +67,4 @@ $F() = 0.0512 + 0.0176*te$ avec un maximun de F() = 0.5.
 | P | entre 0 et 1 | Correspond à la population des parrofishs. Où 1 est lorsque la capacité de support maximale est atteind et où 0 est l'extinction des parrofishs |
 
 ## Résultat
-
+Présenter les graphiques 
