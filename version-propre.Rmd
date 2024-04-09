@@ -20,7 +20,7 @@ Données :
 | Paramètre | Valeur | Définition |
 |--|--|--|
 | s | 0.49 | Taux de croissance du parrofish par année |
-| r | 1,0.8 | Taux de coissance du corail et taux pour lequel le corail remplace le gazon d'algue par année |
+| r | 1 |  Taux pour lequel le corail remplace le gazon d'algue par année (Taux de coissance du corail) |
 | a | 0.1 | Taux pour lequel les macroalgues remplace le corail par année |
 | gamma | 1.6,0.8 | Taux pour lequel les macroalgues remplace le gazon d'algue par année |
 | d | 0.44 | Taux de mortalité du corail par année |
