@@ -20,9 +20,9 @@ Dans notre étude, nous avons cherché à rendre ce modèle plus réaliste en y 
 ## Méthode
 
 Mise en œuvre d'un modele avec des ouragan stochastique:  
-##### $dC = g_C(C,M,P,R,t)dt - c(F()+\sigma \epsilon)idq$  
-##### $dM = g_M(C,M,P,R,t)dt - Mm_Hdqi$  
-##### $dP = g_P(C,M,P,R,t)dt$  
+$dC = g_C(C,M,P,R,t)dt - c(F()+\sigma \epsilon)idq$  
+$dM = g_M(C,M,P,R,t)dt - Mm_Hdqi$  
+$dP = g_P(C,M,P,R,t)dt$  
 $dR = g_R(C,M,P,R,t)dt - (R-1)(G() + \sigma \epsilon)idq$  
 $dY = 1 - M - C$  
 
