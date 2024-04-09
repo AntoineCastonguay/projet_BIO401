@@ -516,6 +516,45 @@ graph.imageR(2,1/9,10,1)
 On peut ensuite bâtir un graphique avec la valeur maximale de rugosité finale pour chacune des 9 simulations possibles d'impact et de fréquence variées:
 
 ```{r}
+rugfin<-as.data.frame(matrix(0,nrow = 3, ncol = 3))
+colnames(rugfin)<-c("1/9 ans", "1/15 ans", "1/30 ans")
+rownames(rugfin)<-c(1,2,3)
+
+rugfin[,1]<-c(graph.imageR(1,1/9,5,0.25,F,T),
+              graph.imageR(2,1/9,5,0.25,F,T),
+              graph.imageR(3,1/9,5,0.25,F,T))
+rugfin[,2]<-c(graph.imageR(1,1/15,5,0.25,F,T),
+              graph.imageR(2,1/15,5,0.25,F,T),
+              graph.imageR(3,1/15,5,0.25,F,T))
+rugfin[,3]<-c(graph.imageR(1,1/30,5,0.25,F,T),
+              graph.imageR(2,1/30,5,0.25,F,T),
+              graph.imageR(3,1/30,5,0.25,F,T))
+
+# Définir les catégories
+categories <- c("Faible", "Modéré", "Important")
+
+# Créer un diagramme vide 
+barplot(rep(0, length(categories)), names.arg = categories, ylim = c(1,3),
+        xlab = "Impact", ylab = "Rugosité finale moyenne max", main = "")
+
+# Ajout des points et lignes sur le diagramme
+points(rep(1:length(categories), each = 1), rugfin[,1],
+       pch = 2, col = "black")
+points(rep(1:length(categories), each = 1), rugfin[,2],
+       pch = 4, col = "black")
+points(rep(1:length(categories), each = 1), rugfin[,3],
+       pch = 6, col = "black")
+lines(rep(1:length(categories), each = 1), rugfin[,1],
+       pch = 2, col = "black")
+lines(rep(1:length(categories), each = 1), rugfin[,2],
+       pch = 4, col = "black")
+lines(rep(1:length(categories), each = 1), rugfin[,3],
+       pch = 6, col = "black")
+#on ajoute la légende 
+legend("topright", legend = c("/9 ans", "/15 ans","/30 ans"),
+       col = c("black","black","black"), pch = c(2,4,6), lty = c(1, 1),
+       lwd = 1.5, bg = "white",cex = 0.65)
+
 
 ```
 
