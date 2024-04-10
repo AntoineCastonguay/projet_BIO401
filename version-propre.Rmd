@@ -5,17 +5,23 @@ date: "2024-04-07"
 output: html_document
 ---
 
-Partie 1 :
+#### Article de référence : Une approche basée sur un modèle pour déterminer les effets à long terme de multiples facteurs de stress en interaction sur les récifs coralliens.
 
-Question biologique : 
+###### Blackwood, J.C., Hastings, A. and Mumby, P.J. (2011), A model-based approach to determine the long-term effects of multiple interacting stressors on coral reefs. Ecological Applications, 21: 2722-2733. https://doi.org/10.1890/10-2195.1
+
+###### Les analyse du modele ont été fait par : Antoine Castonguay et Félix Richard
+
+## Partie 1 :
+
+### Question biologique : 
 
 Est ce que la résilience des récifs coraliens est suffisante pour lutter contre les facteur de stress tels que la surpêche et les ouragans? 
 
-Hypothèse :
+### Hypothèse :
 
 Elle est suffisante jusqu'à une certaine limite qui dépend beaucoup de la complexité du corail, le l'effort de pêche et de l'impact aléatoire des ouragans.
 
-Données :  
+### Données :  
 
 | Paramètre | Valeur | Définition |
 |--|--|--|
@@ -41,13 +47,13 @@ Données :
 
 | Variable | Valeur possible | Définition |
 |--|--|--|
-| R | entre 1 et 3 | Correspond à la rugosité des recif corralien. Où 1 équivaut à une structrue parfaitement lisse et où 3 est un rugosité très pronnoncer rarement atteint qui équivaut a un récif corailien offrant une tres bonne qualité d'habitat.
+| R | entre 1 et 3 | Correspond à la rugosité des récifs coralliens, où 1 équivaut à une structure parfaitement lisse et où 3 représente une rugosité très prononcée, rarement atteinte, qui signifie un récif corallien offrant une très bonne qualité d'habitat. |
 | C | entre 0 et 1 | Correspond à la proportion de couverture du paysage par le corail. Où 1 est une couverture complete et où 0 est l'extinction des corail. |
 | M | entre 0 et 1 | Correspond à la proportion de couverture du paysage par les macroalgues. Où 1 est une couverture compete et où 0 est l'extinction des macroalgue. |
 | Y | entre 0 et 1 | Le gazon d'algue correspond a tout ce qui n'est pas corail et macroalgue. |
 | P | entre 0 et 1 | Correspond à la population des parrofishs. Où 1 est lorsque la capacité de support maximale est atteind et où 0 est l'extinction des parrofishs |
 
-Méthode :
+### Méthode :
 
 La capacité de support de l'environnement prendre en compte l'abondance des algues, qui constituent leur nourriture, ainsi que la qualité de l'habitat K(M + T, R).  
 $K(M+T,R) = \frac{(c1R + c2)}{K_{max}}\frac{\delta(M+Y)}{1 + v(M+Y)}$
@@ -78,7 +84,7 @@ $F() = 0.0512 + 0.0176*te$ avec un maximun de F() = 0.5.
 où $g_C(C,M,P,R,t),g_M(C,M,P,R,t),g_P(C,M,P,R,t),g_R(C,M,P,R,t)$ sont des fonctions qui represente le modèle.  
 où q est un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.  
 
-Supposition :
+### Supposition :
 1. Aucun changement dans la température, la chimie de l'eau ou l'élévation du niveau de la mer est significatif sur l'echelle du temps étudier.  
 2. Les perturbations ou stresse des récifs coralliens autres que les ouragans, les impacts indirects de la pêche ou la compétition de l'espace avec les macroalgues ne sont pas pris en compte.  
 3. L'effort de pêche ont une influence proportionnelement de la dynamique de population parrofishs et est constant pour toute les années de la simulation.  
@@ -90,15 +96,16 @@ Supposition :
 9. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
 10. Un ouragan affecte affecte l'ensemble de l'écosysteme de fasson égale.  
 
-Calcul :
+### Calcul :
 
-```{r}
+```{r, eval=F}
 # Chargement de librairie
 library(deSolve)
 library(viridis)
 ```
 
-```{r}
+```{r, eval=F}
+# Code pour l'implémentation du modele dans une fonction
 # Fonction pour le modele deterministe du l'interaction entre le corail, les marcoalgue et les parrofishs avec une rugosité fixe.
 interaction_coral <- function(t, vars, parms){
   with(as.list(c(parms, vars)), {
@@ -139,7 +146,8 @@ dessinSol <- function(ic=c(M=0.001,C=0.56,P=0.75),
 }
 ```
 
-```{r}
+```{r, eval=F}
+# Code pour figure 1
 # Matrice des valeur finale de la proportion de corail apres "times" ans
 coral <- matrix(data = NA, nrow = 41, ncol = 41)
 
@@ -172,7 +180,8 @@ for (i in 1:41) {
 }
 ```
 
-```{r}
+```{r, eval=F}
+# code pour figure de 2
 # Différent état de rugosité de départ 
 rug.vec <- c(1.8,2.1,2.4)
 fish.vec <- data.frame()
@@ -198,39 +207,9 @@ for (j in seq(3,9,by=3)) {
 }
 ```
 
-Résultat :
-
-```{r}
-# Définition des noms de lignes et de colonnes
-row_names <- paste(seq(1, 3, by = (2 / 40)))
-col_names <- paste(seq(0, 1, by = (1 / 40)))
-
-# Attribution des nom de ligne et de colonnes
-row.names(coral) <- row_names
-colnames(coral) <- col_names
-
-# Créer le graphique avec la matrice en tant que données
-image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(40),
-      xlab = "fishing effort", ylab = "R", main = "Graphique",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
-```
-Affichage des graphique des valeur d'équilibre apres 30 ans de la couverture corallienne en fonction de l'effort de pêche par rapport au taux de croissance des poissons-perroquets (f) pour différentes valeurs de rugosité (R) afin de démontrer les implications de l'effort de pêche sur la couvuture des récif corailien.
-```{r}
-# Affichage des graphiques
-par(mfrow=c(1,3))
-plot(x = fish.vec[,1], y = fish.vec[,2],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = paste("Graphique R =", rug.vec[1]))
-lines(x = fish.vec[,1], y = fish.vec[,3])
-
-plot(x = fish.vec[,1], y = fish.vec[,5],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = paste("Graphique R =", rug.vec[2]))
-lines(x = fish.vec[,1], y = fish.vec[,6])
-
-plot(x = fish.vec[,1], y = fish.vec[,8],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = paste("Graphique R =", rug.vec[3]))
-lines(x = fish.vec[,1], y = fish.vec[,9])
-par(mfrow=c(1,1))
-```
-
 Pour construire les graphiques du couvert de corail final moyen et de la rugosité finale moyenne selon la rugosité initiale et l'effort de pêche, nous avons utilisé la fonction suivante. Elle inclut l'incidence aléatoire d'ouragan avec différentes gravités d'impacts définis, et occurant à différentes fréquences moyennes. Les catégories d'impacts sont faibles (1), modérés (2) et importants (3) et les différentes fréquences moyennes sont 1 fois par 9 ans (1/9), une fois par 15 ans (1/15) et une fois par 30 ans (1/30).
 
-```{r}
+```{r, eval=F}
 corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1,graph=FALSE){
   #on instaure une étendue de temps
   tmax <- 100
@@ -360,7 +339,8 @@ corailstochastique(R0=2.2, f= 0.5, lambda = 1/15,impact = 2,dt=0.1,graph = T)
 
 On peut ensuite construire les graphiques du couvert de corail final moyen ainsi que l'écart-type pour un éventail de rugosité initiale entre 1 et 3 et d'effort de pêche entre 0 et 1. La fonction utilisée pour cela est la suivante:
 
-```{r}
+```{r, eval=F}
+
 library(fields)
 graph.imageC <- function(impact,freq,it=10,pas=0.1){
   #on initie une matrice pour les moyennes et une autre pour les écarts-types
@@ -405,17 +385,10 @@ graph.imageC <- function(impact,freq,it=10,pas=0.1){
              main=c("moyenne de C finale",paste(c("fréq:1/",1/l,", impact:",imp),collapse = "")))
 }
 ```
-On peut ainsi visualiser le résultat pour les 2 situations suivantes, par exemple: la simulation avec ouragans à impacts modérés (2) d'une fréquence faible (30 ans) et la simulation avec ouragans à impacts modérés (2) d'une fréquence élevée:
-
-```{r, fig.dim=c(12,5)}
-graph.imageC(2,1/30,10,1)
-graph.imageC(2,1/9,10,1)
-
-```
 
 Idem pour la moyenne ainsi que l'écart-type de la rugosité. La fonction utilisée pour cela est la suivante (ce sont les mêmes étapes que pour graph.imageC, seulement avec [2] pour obtenir la rugosité finale pour `corailstochastique()`, les étapes ne sont donc pas commentées) et les 2 mêmes simulations sont montrées à la fin:
 
-```{r,fig.dim=c(12,5)}
+```{r,fig.dim=c(12,5), eval=F}
 graph.imageR <- function(impact,freq,it=10,pas=0.1, graph=T, max=F){
   
   matC <- matrix(0, nrow = 21,ncol = 26)
@@ -463,9 +436,47 @@ graph.imageR(2,1/9,10,1)
 
 ```
 
+### Résultat :
+
+```{r, eval=F}
+# Affichage pour figure 1
+# Définition des noms de lignes et de colonnes
+row_names <- paste(seq(1, 3, by = (2 / 40)))
+col_names <- paste(seq(0, 1, by = (1 / 40)))
+
+# Attribution des nom de ligne et de colonnes
+row.names(coral) <- row_names
+colnames(coral) <- col_names
+
+# Créer le graphique avec la matrice en tant que données
+image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(40),
+      xlab = "fishing effort", ylab = "R", main = "Graphique",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
+```
+Affichage des graphique des valeur d'équilibre apres 30 ans de la couverture corallienne en fonction de l'effort de pêche par rapport au taux de croissance des poissons-perroquets (f) pour différentes valeurs de rugosité (R) afin de démontrer les implications de l'effort de pêche sur la couvuture des récif corailien.
+```{r, eval=F}
+# Affichage pour figure 2
+par(mfrow=c(1,3))
+plot(x = fish.vec[,1], y = fish.vec[,2],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = paste("Graphique R =", rug.vec[1]))
+lines(x = fish.vec[,1], y = fish.vec[,3])
+
+plot(x = fish.vec[,1], y = fish.vec[,5],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = paste("Graphique R =", rug.vec[2]))
+lines(x = fish.vec[,1], y = fish.vec[,6])
+
+plot(x = fish.vec[,1], y = fish.vec[,8],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = paste("Graphique R =", rug.vec[3]))
+lines(x = fish.vec[,1], y = fish.vec[,9])
+par(mfrow=c(1,1))
+```
+
+On peut ainsi visualiser le résultat pour les 2 situations suivantes, par exemple: la simulation avec ouragans à impacts modérés (2) d'une fréquence faible (30 ans) et la simulation avec ouragans à impacts modérés (2) d'une fréquence élevée:
+
+```{r, fig.dim=c(12,5), eval=F}
+graph.imageC(2,1/30,10,1)
+graph.imageC(2,1/9,10,1)
+```
+
 On peut ensuite bâtir un graphique avec la valeur maximale de rugosité finale pour chacune des 9 simulations possibles d'impact et de fréquence variées:
 
-```{r}
+```{r, eval=F}
 rugfin<-as.data.frame(matrix(0,nrow = 3, ncol = 3))
 colnames(rugfin)<-c("1/9 ans", "1/15 ans", "1/30 ans")
 rownames(rugfin)<-c(1,2,3)
