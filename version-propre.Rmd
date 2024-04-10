@@ -87,7 +87,8 @@ Supposition :
 6. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des parrofishs. 
 7. Les macroalgues on le même niveau de dommage peu importe le niveau d'impact des ouragan. 
 8. Les ouragans on trois niveau d'impacts éléver, moyen et faible et trois fréquences moyennes soit 1 par 9 ans, 1 par 15 ans et 1 par 30 ans.
-9. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique.  
+9. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
+10. Un ouragan affecte affecte l'ensemble de l'écosysteme de fasson égale.  
 
 Calcul :
 
