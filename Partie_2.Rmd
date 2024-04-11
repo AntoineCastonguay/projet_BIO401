@@ -184,7 +184,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 
 La relation entre la rugosité et le niveau d'impact des ouragants sur les récif corialien avec 3 niveau d'effort de peche : 
 
-```{r}
+```{r, eval=FALSE}
 library(fields)
 #graphique de C en fonction de I et R
 graph.imageCIR <- function(fishing,freq,it=10,pas=0.1){
@@ -271,7 +271,7 @@ Dans cette section, il est décrit
 
 La relation entre l'effort de peche et le niveau d'impact des ouragant sur les récif corialien avec 3 niveau de rugosité de départ :
 
-```{r}
+```{r,eval=FALSE}
 
 #graphique de C final en fonction de I et f
 graph.imageCIf <- function(R0,freq,it=10,pas=0.1){

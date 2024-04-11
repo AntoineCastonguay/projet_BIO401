@@ -13,11 +13,11 @@ output: html_document
 
 ### Question biologique : 
 
-Comment la résilience des récifs coralliens varie-t-elle selon l'effort de pêche et l'impact des ouragans?
+Comment la résilience des récifs coraliens varie-t-elle en fonction de l'effort de pêche et de l'effet des ouragans?
 
 ### Hypothèse :
 
-1. La résilience diminue quand l'effort de peche augmente.
+1. La résilience diminue quand l'effort de pêche augmente.
 2. La résilience dimniue quand les ouragan sont plus fréquence. 
 3. La résilience dimniue quand les ouragan sont plus puissants.
 
@@ -57,7 +57,7 @@ Comment la résilience des récifs coralliens varie-t-elle selon l'effort de pê
 </div>
 
 ### Méthode :
-Modèle rugosité fixe:  
+Modèle pour une rugosité fixe:  
 <div style="margin: 0 auto;">
 $\frac{dC}{dt} = \small{rTC - dC - aMC}$   
 $\frac{dM}{dt} = \small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY}$  
@@ -74,7 +74,7 @@ $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$
 $\frac{dR}{dt} = \small{h_GC(3-R) - h_E(1-C)(R-1)}$  
 $\frac{dY}{dt} = \small{1 - M - C}$ 
 
-Modèle Nondimentionner par rapport taux de croissance des poisson perroquet par année:  
+Modèle Non-dimensionalisé par rapport taux de croissance des poisson perroquet par année:  
 $\frac{dC}{dts} = (\small{rTC - dC - aMC})\frac{1}{s}$   
 $\frac{dM}{dts} = (\small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY})\frac{1}{s}$   
 $\frac{dP}{dts} = \small{P(1 -} \frac{P}{\beta K(M+T,R)} \small{ - fP}$  
