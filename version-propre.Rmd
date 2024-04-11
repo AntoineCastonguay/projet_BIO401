@@ -13,15 +13,6 @@ output: html_document
 
 ### Question biologique : 
 
-<<<<<<< HEAD
-Comment la résilience des récifs coraliens varie-t-elle en fonction de l'effort de pêche et de l'effet des ouragans?
-
-### Hypothèse :
-
-1. La résilience diminue quand l'effort de pêche augmente.
-2. La résilience dimniue quand les ouragan sont plus fréquence. 
-3. La résilience dimniue quand les ouragan sont plus puissants.
-=======
 Comment la résilience (persistance) des récifs coralliens varie-t-elle selon l'effort de pêche, l'impact des ouragans et la rugosité?
 
 ### Hypothèse :
@@ -30,7 +21,6 @@ Comment la résilience (persistance) des récifs coralliens varie-t-elle selon l
 2. La résilience diminue quand les ouragan sont plus fréquence. 
 3. La résilience diminue quand les ouragan sont plus puissants.  
 4. La résilience diminue quand la rugosité est faible.  
->>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
 
 ### Données :  
 <div style="width: 85%; margin: 0 auto;">
@@ -68,12 +58,9 @@ Comment la résilience (persistance) des récifs coralliens varie-t-elle selon l
 </div>
 
 ### Méthode :
-<<<<<<< HEAD
-Modèle pour une rugosité fixe:  
-<div style="margin: 0 auto;">
-=======
+
 Modèle rugosité fixe:  
->>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
+
 $\frac{dC}{dt} = \small{rTC - dC - aMC}$   
 $\frac{dM}{dt} = \small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY}$  
 $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$  
@@ -95,16 +82,6 @@ $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$
 $\frac{dR}{dt} = \small{h_GC(3-R) - h_E(1-C)(R-1)}$  
 $\frac{dY}{dt} = \small{1 - M - C}$ 
 
-<<<<<<< HEAD
-Modèle non-dimensionalisé par rapport taux de croissance des poisson perroquet par année:  
-$\frac{dC}{dts} = (\small{rTC - dC - aMC})\frac{1}{s}$   
-$\frac{dM}{dts} = (\small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY})\frac{1}{s}$   
-$\frac{dP}{dts} = \small{P(1 -} \frac{P}{\beta K(M+T,R)} \small{ - fP}$  
-$\frac{dR}{dts} = \small{h_GC(3-R) - h_E(1-C)(R-1)}$  
-$\frac{dY}{dts} = \small{1 - M - C}$  
-
-Ajout de composantes d'ouragans stochastiques:  
-=======
 Mise en œuvre d'un ouragan stochastique:  
 >>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)dq}$  

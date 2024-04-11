@@ -178,13 +178,8 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
       #différents dommage selon valeur d'impact
       
       #on calcule les dommages d'un fort ouragan
-<<<<<<< HEAD
-      dommC <- C*(F + o*runif(1))*pmax(2*impact-0.5,0)
       dommM <- M*mH*(0.75+impact*0.5)
-=======
       dommC <- C*(F + o*runif(1))*pmax(2*impact-0.6,0)
-      dommM <- M*mH*(1+impact*0.25)
->>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
       dommR <- (R-1)*(G + o*runif(1))*(impact*2.25+0.25)
       
     }else{
@@ -234,9 +229,6 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 ```
 
 La relation entre la rugosité et le niveau d'impact des ouragants sur les récif corialien avec 3 niveau d'effort de peche : 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 =======
 Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qui il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
@@ -330,13 +322,8 @@ Les résultats ont montré peu de fluctuations selon l'intensité des ouragans d
 
 La relation entre l'effort de peche et le niveau d'impact des ouragant sur les récif corialien avec 3 niveau de rugosité de départ :
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 Pour réprensenté les résultat d'une facon différente, nous avons mis en relation l'effort de peche et le niveau d'impact des ouragant. Cette approche permet de mieux voir l'impact sur différente rugosité de départ.
->>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
 
-=======
 Pour réprensenter les résultats d'une facon différente, nous avons mis en relation l'effort de pêche et le niveau d'impact des ouragant. Cette approche permet 
 
 ```{r,eval=FALSE}
