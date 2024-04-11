@@ -23,7 +23,7 @@ Comment la résilience des récifs coraliens varie-t-elle en fonction de l'effor
 
 ### Données :  
 <div style="width: 85%; margin: 0 auto;">
-#### Tableau 1 : Paramètre utiliser dans le modèle de référence et leurs définitions.
+#### Tableau 1 : Paramètres utilisés dans le modèle de référence et leurs définitions.
 | Paramètre | Valeur | Définition |
 |:--:|:----:|:--------------|
 | s         | 0.49   | Taux de croissance des poisson perroquets par année |
@@ -46,14 +46,14 @@ Comment la résilience des récifs coraliens varie-t-elle en fonction de l'effor
 | sigma     | 0.05   | Écart maximal de la variabilité des impacts des ouragans d'epsilon |
 | epsilon   | entre 0 et 1| Variable aléatoire suivant une distribution normale standard qui décrit la composante aléatoire des impacts des ouragans sur le corail |
 
-#### Tableau 2 : Variable utiliser dans le modèle de référence et leur définition anisi que leurs limites.
-| Variable | Valeur possible | Définition |
+#### Tableau 2 : Variables utilisées dans le modèle de référence avec leur définition anisi que leurs limites.
+| Variable | Valeurs possibles | Définition |
 |:--:|:----:|:--------------|
-| C | entre 0 et 1 | Correspond à la proportion de couverture du paysage par le corail. Où 1 est une couverture complete et où 0 est l'extinction des corail. |
-| M | entre 0 et 1 | Correspond à la proportion de couverture du paysage par les macroalgues. Où 1 est une couverture compete et où 0 est l'extinction des macroalgue. |
-| P | entre 0 et 1 | Correspond à la population des poisson perroquets. Où 1 est lorsque la capacité de support maximale est atteind et où 0 est l'extinction des poisson perroquets |
-| R | entre 1 et 3 | Correspond à la rugosité des récifs coralliens, où 1 équivaut à une structure parfaitement lisse et où 3 représente une rugosité très prononcée, rarement atteinte, qui signifie un récif corallien offrant une très bonne qualité d'habitat. |
-| Y | entre 0 et 1 | Le gazon d'algue correspond a tout ce qui n'est pas corail et macroalgue. |
+| C | entre 0 et 1 | Correspond à la proportion de couverture du paysage par le corail. Où 1 est un couvert total et où 0 est l'absence de corail. |
+| M | entre 0 et 1 | Correspond à la proportion de couverture du paysage par les macroalgues. Où 1 est un couvert total et où 0 est l'absence des macroalgue. |
+| P | entre 0 et 1 | Correspond à la taille de population des poisson perroquets relativement à leur capacité de soutien. Vaut 1 lorsque la capacité de support est atteinte et 0 si les poissons perroquets sont absents |
+| R | entre 1 et 3 | Correspond à la rugosité des récifs coralliens, où 1 équivaut à une structure parfaitement lisse et où 3 représente une complexité tridimensionelle prononcée, rarement atteinte, qui offrant une très bonne qualité d'habitat. |
+| Y | entre 0 et 1 | Correspond à la proportion de couverture du paysage par du gazon d'algue, remplit l'espace inoccupé par le corail ou les macroalgues. |
 </div>
 
 ### Méthode :
@@ -64,7 +64,7 @@ $\frac{dM}{dt} = \small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\g
 $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$  
 $\frac{dY}{dt} = \small{1 - M - C}$  
 
-La capacité de support de l'environnement pour le poisson perroquets prendre en compte l'abondance des algues, qui constituent leur nourriture, ainsi que la qualité de l'habitat K(M + T, R).  
+La capacité de support de l'environnement pour le poisson perroquets prend en compte l'abondance des algues, qui constituent leur nourriture, ainsi que la rugosité, qui constitue de l'habitat K(M + T, R).  
 $\small{K(M+T,R) = }\frac{(c1R + c2)}{K_{max}}\frac{\delta(M+Y)}{1 + v(M+Y)}$
 
 Modèle avec un rugosité variable:  
@@ -74,14 +74,14 @@ $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$
 $\frac{dR}{dt} = \small{h_GC(3-R) - h_E(1-C)(R-1)}$  
 $\frac{dY}{dt} = \small{1 - M - C}$ 
 
-Modèle Non-dimensionalisé par rapport taux de croissance des poisson perroquet par année:  
+Modèle non-dimensionalisé par rapport taux de croissance des poisson perroquet par année:  
 $\frac{dC}{dts} = (\small{rTC - dC - aMC})\frac{1}{s}$   
 $\frac{dM}{dts} = (\small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY})\frac{1}{s}$   
 $\frac{dP}{dts} = \small{P(1 -} \frac{P}{\beta K(M+T,R)} \small{ - fP}$  
 $\frac{dR}{dts} = \small{h_GC(3-R) - h_E(1-C)(R-1)}$  
 $\frac{dY}{dts} = \small{1 - M - C}$  
 
-Mise en œuvre d'un ouragan stochastique:  
+Ajout de composantes d'ouragans stochastiques:  
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)dq}$  
 $\small{dM = g_M(C,M,P,R,t)dt - Mm_Hdq}$  
 $\small{dP = g_P(C,M,P,R,t)dt}$  

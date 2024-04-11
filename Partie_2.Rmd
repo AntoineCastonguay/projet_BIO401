@@ -20,7 +20,7 @@ Dans notre étude, nous avons cherché à rendre ce modèle plus réaliste en y 
 
 ## Méthode
 
-Mise en œuvre d'un ouragan stochastique:  
+Modèle avec implémentation d'ouragans stochastique:  
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)idq}$  
 $\small{dM = g_M(C,M,P,R,t)dt - Mm_Hidq}$  
 $\small{dP = g_P(C,M,P,R,t)dt}$  
@@ -73,8 +73,50 @@ $F() = 0.0512 + 0.0176*te$ avec un maximun de F() = 0.5.
 | Y | entre 0 et 1 | Le gazon d'algue correspond a tout ce qui n'est pas corail et macroalgue. |
 </div>
 
+
+Afin d'ajouter au modèle stochastique de l'article de Blackwood et al.(2011), nous avons modifié légèrement le modèle pour tenter de se débarrasser des catégories d'impact en les remplaçant par un coefficient d'impact continu. Cette démarche a pour but de pouvoir plus facilement visualiser la gradation de l'effet de la puissance des ouragans sur la résilience du corail dans diverses situations. Dans un contexte de changements climatiques, nous nous attendons à percevoir des différences au niveau de l'ampleur des phénomènes météorologiques tels que les ouragans. Nous nous sommes basés sur le document de Cervantes et al. (2020) sur les relations entre les caractéristiques des ouragans, la structure du récif de corail et l'impact de ces perturbations sur la rugosité et le couvert. 
+
+Avant tout, nous nous sommes débarrassé des 3 niveaux d'impacts qui étaient implémentés dans le modèle proposé par Blackwood et al. (2011). Dans leur cas, un ouragan avec impact qualifié de fort ou modéré a pour effet de réduire d'un pourcentage $F+\sigma\epsilon$ le couvert de corail, où $F$ est une fonction du temps écoulé depuis le dernier ouragan $t_o$, de sorte que l'impact soit en moyenne linéairement plus grand plus le dernier ouragan date, jusqu'à concurrence de 50% de réduction, qui est atteinte quand le dernier ouragan s'est passé il y a 25.5 années ou plus. La composante $\sigma$ est une variance fixée à 0,05 et $\epsilon$ est tiré aléatoirement d'une distribution normale, le tout pour conférer une certaine variabilité à l'effet sur le couvert de corail. Les ouragans de faible puissance sont ici considérés comme ne réduisant pas significativement le couvert de corail. L'effet sur la rugosité est fixé à 50% de réduction, sur une échelle allant de 3 à 1 (50% d'une rugosité de 3 résulte en une rugosité de 2), dans le cas d'un ouragan à impact fort, à 5% de réduction pour un ouragan à faible intensité tandis que dans le cas d'un ouragan d'intensité modéré, la réduction de la rugosité est calculée de la même façon que celle du couvert de corail. Le dommage causé aux macroalgues est considéré par ce modèle comme constant peu importe l'intensité des ouragans, avec une perte ($m_H$) de 80% du couvert M lors d'un évènement d'ouragan.
+
+Le $F$ est calculé ici en fonction de $t_o$, et est borné entre 0 et 0.5 selon l'équation suivante:
+$F(t_o)=0.0512+0.176\times t_o$ quand $t_o\leq25.5$ années
+$F(t_o)=0.5$ quand $t_o>25.5$ années
+
+On obtient ainsi les équations suivantes pour déterminer le dommage à chaque composante, dans le cas où un ouragan survient:
+
+Ouragan à fort impact:
+
++ $dC=C\times (F+\sigma \epsilon)$
++ $dM=M\times m_H$
++ $dR=(R-1)\times 0.5$
+
+Ouragan à impact modéré:
+
++ $dC=C\times (F+\sigma \epsilon)$
++ $dM=M\times m_H$
++ $dR=(R-1)\times (F+\sigma \epsilon)$
+
+Ouragan à impact faible:
+
++ $dC=0$
++ $dM=M\times m_H$
++ $dR=(R-1)\times 0.05$
+
+Le $F$ est déterminé par l'équation suivante: $F(t_o)=0.$
+
+
+
+Pour le modèle que nous proposons, la première modification apportée est que nous fixons un coefficient d'impact $i$ pour la simulation qui agit sur le dommage subi par chaque composante. Ainsi ce coefficient d'impact d'une valeur variant entre 0 et 1 dicte le dommage subi par les différents éléments de la simulation. Nous ajustons l'étendue possible de $dC$, $dM$ et $dR$ afin que la variabilité des dommages entre un coefficient d'impact à 1 et un coefficient d'impact à 0 corresponde aux limites de ce qui est observé par le document de Cervantes et al. (2020). Ainsi, la perte de couvert de corail est également proportionnel à $F$, mais est bornée à 0% quand $i\in [0,0.25]$, correspondant à un ouragan de trop faible intensité pour réduire le couvert coralien, et varie linéairement entre 0% et 75% quand $I\in[0.25,1]$. Pour le couvert de macroalgues, le dommage subi reste en moyenne le même, soit 80%, mais le coefficient d'impact ajoute une variabilité de 25% qui fait en sorte que le dommage varie proportionnellement entre 60% et 100% selon la valeur de $I$. Cette modification pallie partiellement le fait qu'en situation d'ouragan plutôt faible, les macroalgues sont désavantagées par rapport au corail. Pour la rugosité, la littérature semblait démontrer que la proportion de rugosité perdue était proportionnelle à la valeur de rugosité elle même, nous avons donc ajouté la composante $G=0.1\times (R-1)$ ainsi qu'une relation avec $I$ faisant ainsi varier $dR$ entre 0 et 50% selon $R$ et $I$, mais seulement limité entre 0% et 5% si $I=0$. 
+Une autre modification que nous avons apportée au modèle est une forme d'accélération du rythme auquel la valeur de F augmente. Avec les années qui passent, nous supposons que les dégâts des ouragans deviendront plus grave plus rapidement en fonction du temps écoulé depuis le dernier ouragan, à cause des changements climatiques. Ainsi, si au début de la simulation, il faut 25.5 années pour que F atteigne son maximum à 0.5, graduellement cette période sera raccourcie pour être de seulement 17 années à la fin. Les équations déterminant le dommage à chaque composante du système lors d'un ouragan est donc défini par les équations suivantes:
+
++ $dC=C\times (F+ \sigma \epsilon)\times (2\times I-0.5)$ où on pose que si $dC<0$, alors $dC=0$
++ $dM=M\times m_H\times(0.5\times I+0.75)$
++$dR=(R-1)\times(G + \sigma\epsilon)\times(2.25\times I+0.25)$ où $G=0.1\times (R-1)$
++$F(t_o)=0.0512+0.0176\times t_o\times(1+t/200)$ où si $F(t_o)>0.5$ alors $F(t_o)=0.5$
+
+
 ## Résultat
-Dans un premier lieux, la fonction de la simulation du modele XXX a été dévelloper. La fonction prend en argument la rugosité de départ (R0), l'effort de pêche (f), la probabilité qu'un ouragan survienne dans la zone des récit corailien par an (lamda), le niveau d'impact de l'ouragan (impact) et la duré des pas de temps sachant que 1 équivaut a faire un pas de temps d'une année (dt).
+Dans un premier lieu, la fonction de la simulation du modele XXX a été dévelloper. La fonction prend en argument la rugosité de départ (R0), l'effort de pêche (f), la probabilité qu'un ouragan survienne dans la zone des récit corailien par an (lamda), le niveau d'impact de l'ouragan (impact) et la duré des pas de temps sachant que 1 équivaut a faire un pas de temps d'une année (dt). Après une simulation de 100 ans, la fonction nous retourne la valeur de couverture du paysage par le corail et sa rugosité.
 ```{r}
 corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   #on instaure une étendue de temps
@@ -82,6 +124,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   t <- 0
   #le temps au dernier ouragan, en tenant compte que la simulation ne commence pas nécessairement juste après un ouragan
   to <- runif(1,0,25.5)
+  imp<-impact
   
   #on pose les valeurs de départ et les paramètres
   C <- 0.56
@@ -114,6 +157,8 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   
   while (t<tmax){
     
+    if(imp==2)impact <- runif(1)
+    
     #on effectue le tirage pour déterminer si il y a ou pas ouragan
     ouragan <- pmin(rpois(1,lambda*dt),1)
     #si oui ou non, on ajuste dq
@@ -133,9 +178,9 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
       
       #on calcule les dommages d'un fort ouragan
       dommC <- C*(F + o*runif(1))*pmax(2*impact-0.5,0)
-      dommM <- M*mH*(1+impact*0.25)
+      dommM <- M*mH*(0.75+impact*0.5)
       dommR <- (R-1)*(G + o*runif(1))*(impact*2.25+0.25)
-    
+      
     }else{
       dommC <- 0
       dommM <- 0
@@ -184,7 +229,13 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 
 La relation entre la rugosité et le niveau d'impact des ouragants sur les récif corialien avec 3 niveau d'effort de peche : 
 
-```{r, eval=FALSE}
+<<<<<<< HEAD
+
+=======
+Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qui il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
+
+```{r,eval=FALSE}
+
 library(fields)
 #graphique de C en fonction de I et R
 graph.imageCIR <- function(fishing,freq,it=10,pas=0.1){
@@ -208,7 +259,7 @@ graph.imageCIR <- function(fishing,freq,it=10,pas=0.1){
       matsd[i,j]<-sd(res)
     }
   }
-
+  
   x_values <- seq(0, 1, length.out = ncol(matC))
   y_values <- seq(1, 3, length.out = nrow(matC))
   # Plot the matrix as an image with different colored pixels
@@ -221,9 +272,9 @@ graph.imageCIR <- function(fishing,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Rugosité initiale",
              main=c("écart-type de C finale",paste(c("fréq:1/",1/l,", fishing:",f0),collapse = "")))
 }
-graph.imageCIR(fishing = 0.1, freq = 1/15, it=5, pas = 0.5)
-graph.imageCIR(fishing = 0.4, freq = 1/15, it=5, pas = 0.5)
-graph.imageCIR(fishing = 0.7, freq = 1/15, it=5, pas = 0.5)
+graph.imageCIR(fishing = 0.1, freq = 1/15, it=5, pas = 0.1)
+graph.imageCIR(fishing = 0.4, freq = 1/15, it=5, pas = 0.1)
+graph.imageCIR(fishing = 0.7, freq = 1/15, it=5, pas = 0.1)
 
 #graphique de R finale en fonction de I et R
 graph.imageRIR <- function(fishing,freq,it=10,pas=0.1){
@@ -260,16 +311,20 @@ graph.imageRIR <- function(fishing,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Rugosité initiale",
              main=c("écart-type de R finale",paste(c("fréq:1/",1/l,", fishing:",f0),collapse = "")))
 }
-graph.imageRIR(fishing = 0.1, freq = 1/15, it=5, pas = 0.5)
-graph.imageRIR(fishing = 0.4, freq = 1/15, it=5, pas = 0.5)
-graph.imageRIR(fishing = 0.7, freq = 1/15, it=5, pas = 0.5)
+graph.imageRIR(fishing = 0.1, freq = 1/15, it=5, pas = 0.1)
+graph.imageRIR(fishing = 0.4, freq = 1/15, it=5, pas = 0.1)
+graph.imageRIR(fishing = 0.7, freq = 1/15, it=5, pas = 0.1)
 
 ```
 
-
-Dans cette section, il est décrit 
+Les résultats ont démontrer tres peux de fluctuation selon l'intensité de ouragan dans le cas des effort de peche faible et moyenne. Toutefois, avec un effort de peche élever, 
 
 La relation entre l'effort de peche et le niveau d'impact des ouragant sur les récif corialien avec 3 niveau de rugosité de départ :
+
+<<<<<<< HEAD
+
+=======
+Pour réprensenter les résultats d'une facon différente, nous avons mis en relation l'effort de pêche et le niveau d'impact des ouragant. Cette approche permet 
 
 ```{r,eval=FALSE}
 
@@ -354,6 +409,43 @@ graph.imageRIf <- function(R0,freq,it=10,pas=0.1){
 # graph.imageRIf(R0=1.8,freq = 1/15,it=5,pas = 0.5)
 # graph.imageRIf(R0=2.1,freq = 1/15,it=5,pas = 0.5)
 # graph.imageRIf(R0=2.4,freq = 1/15,it=5,pas = 0.5)
+```
+```{r}
+graph.imageCRf <- function(freq,it=10,pas=0.1){
+  
+  matC <- matrix(0, nrow = 21,ncol = 26)
+  matsd <- matrix(0, nrow = 21,ncol = 26)
+  
+  imp<-1
+  l<-freq
+  for (i in 1:21) {
+    for (j in 1:26){
+      res <- vector(length = 0)
+      for (z in 1:it) {
+        R1 <- i*0.1+0.9
+        f0 <- j*0.05-0.05
+        
+        w <- corailstochastiquev2(R0=R1,f=f0, lambda = l,impact = imp,dt=pas, graph = F)[1]
+        res<-c(res,w)
+      }
+      matC[i,j]<-mean(res)
+      matsd[i,j]<-sd(res)
+    }
+  }
+  
+  x_values <- seq(0, 1, length.out = ncol(matC))
+  y_values <- seq(1, 3, length.out = nrow(matC))
+  # Plot the matrix as an image with different colored pixels
+  
+  par(mfrow=c(1,2))
+  image.plot(x = x_values, y = y_values, t(matC), col = viridis(20), 
+             xlab = "Effort de pêche", ylab = "Rugosité initiale", 
+             main=c("moyenne de C finale",paste(c("fréq:1/",1/l),collapse = "")))
+  image.plot(x = x_values, y = y_values, t(matsd), col = viridis(20),
+             xlab = "Effort de pêche", ylab = "Rugosité initiale",
+             main=c("écart-type de C finale",paste(c("fréq:1/",1/l),collapse = "")))
+}
+graph.imageCRf(freq = 1/15,it=20,pas = 0.2)
 ```
 
 
