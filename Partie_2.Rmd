@@ -11,6 +11,8 @@ Par Antoince Castonguay et Félix Richard. L'AmigoTeam.
 antoine.castonguay@usherbrooke.ca  
 felix.richard3@usherbrooke.ca  
 
+## Résumer
+
 ## Introduction
 Pour lutter contre la dégradation des récifs coralliens, il est crucial d'agir pour préserver cette ressource inestimable qui favorise la biodiversité des océans. Le modèle développé par Blackwood, J.C., Hastings, A. et Mumby, P.J. en 2011 est particulièrement intéressant, car il décrit bien les effets de plusieurs stress et leurs interactions sur la survie des coraux à long terme. 
 
@@ -112,10 +114,12 @@ Une autre modification que nous avons apportée au modèle est une forme d'accé
 
 + $dC=C\times (F+ \sigma \epsilon)\times (2\times i-0.5)$ où on pose que si $dC<0$, alors $dC=0$
 + $dM=M\times m_H\times(0.5\times i+0.75)$
-+$dR=(R-1)\times(G + \sigma\epsilon)\times(2.25\times i+0.25)$ où $G=0.1\times (R-1)$
-+$F(t_o)=0.0512+0.0176\times t_o\times(1+t/200)$ où si $F(t_o)>0.5$ alors $F(t_o)=0.5$
++ $dR=(R-1)\times(G + \sigma\epsilon)\times(2.25\times i+0.25)$ où $G=0.1\times (R-1)$
++ $F(t_o)=0.0512+0.0176\times t_o\times(1+t/200)$ où si $F(t_o)>0.5$ alors $F(t_o)=0.5$
 
-La fonction de la simulation du modele XXX a été dévelloper. La fonction prend en argument la rugosité de départ (R0), l'effort de pêche (f), la fréquence moyenne estimer des ouragan dans la zone des récit corailien (lamda), le niveau d'impact de l'ouragan (impact) et la duré des pas de temps sachant que 1 équivaut a faire un pas de temps d'une année (dt). Après une simulation de 100 ans, la fonction nous retourne la valeur de couverture du paysage par le corail et sa rugosité.
+Tout comme dans le modèle de Blackwood et al. (2011), l'évènement d'un ouragan est déterminé par un tirage aléatoire dans une distribution de poisson à moyenne $\lambda$, ce tirage offre donc une probabilité $\lambda \times dt$ qu'un ouragan arrive (si le résultat du tirage est >0) pour chaque pas de temps.
+ 
+Les équations différentielles qui déterminent la dynamique des composantes du modèle (C, M, Y, P et R) restent sinon inchangées dans tous les cas où un ouragan n'a pas lieu. Le modèle est sous forme de fonction et est construit avec le logiciel R. Les arguments de cette fonction sont la rugosité initiale du système, entre 1 et 3, l'effort de pêche relatif au taux de croissance de la population de poissons perroquets, entre 0 et 1, la fréquence moyenne estimée des ouragans, entre 0 et 1, le coefficient d'impact, entre 0 et 1 et la taille des pas de temps (dt). Ce dernier argument permet d'ajuster le nombre d'étapes effectuées par la fonction, où plus dt est grand, plus la simulation s'effectue en temps discret et plus dt est petit, plus on se rapproche d'une simulation en temps continu. Cet argument dicte indirectement aussi le temps nécessaire pour calculer la simulation. L'argument facultatif graph peut être fixé à TRUE pour faire s'afficher un graphique de la simulation.
 
 ```{r}
 corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
@@ -226,9 +230,8 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 
 ## Résultat
 
-La relation entre la rugosité et le niveau d'impact des ouragants sur les récif corialien avec 3 niveau d'effort de peche : 
-
-Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qui il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
+Pour mieux comprendre comment répond la résilience du corail face à différentes combinaisons de force d'impact et de rugosité initiale, pour différents efforts de pêche, nous effectuons 10 simulations de 100 ans par combinaison de R et i, et ce pour les 3 différentes valeurs d'effort de pêche correspondant à un effort minime, modéré et élevé avec les valeurs suivantes: 0.1, 0.4 et 0.7. Ces valeurs sont tirées de nos propres observations dans les figures présentées par Blackwood et al. (2011). Au bout de 100 ans, avec la paramétrisation utilisée, quand l'effort de pêche était aux alentours de 0.1, le corail se rétablissait très souvent. Quand l'effort de pêche était plus grand que 0.6, le corail finissait très souvent par s'effondrer au profit des macroalgues. La situation intermédiaire avec un effort de pêche à mi-chemin produisait différentes situations dépendamment de plusieurs facteurs. Nous avons donc considéré plus ou moins arbitrairement que 0.1, 0.4 et 0.7 représentaient respectivement un effort de pêche faible, moyen et fort.
+Les images générées ensuite représentent ainsi la moyenne et l'écart-type du résultat des 10 simulations. Nous faisons cela 2 fois, une fois avec le résultat en terme de couverture par le corail et une autre avec le résultat pour la rugosité après 100 ans. Pour toutes ces simulations la fréquence moyenne estimée des ouragans est fixée à 1/15, correspondant à une fréquence intermédiaire d'un ouragan au 15 ans, et le pas de temps est ajusté à 0.1 pour conférer une bonne résolution aux résultats tout en optimisant le temps nécessaire pour calculer chaque simulation.
 
 ```{r,eval=FALSE}
 library(fields)
@@ -272,7 +275,8 @@ graph.imageCIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
 graph.imageCIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 ```
 
-Un point à noter est que les trois simulations possèdent une large étendue d'écart-type, les écarts maximum allant jusqu'à 30% pour une même simulation. Il est aussi interessant de noter qu'avec un effort de peche plus important, la rugosité minimal pour une résilence des coraux augmente. De plus, un tendance générale soutient que plus l'impact est élver, plus il y a d'instabilité dans la situation des coraux.
+Un premier élément à noter est qu'une tendance générale peut être observée, indiquant que plus l'impact est élevé, plus la situation des coraux est instable. Cette observation s'observe aussi dans les graphiques des l'écart-type. D'ailleur, on peut noter que l'étendue des écart-type est large. Pour une même simulation les écarts maximum peuveuent aller jusqu'à 30%. 
+Dautre part, il est interessant de noter qu'avec un effort de peche plus important, la rugosité minimal pour une résilence des coraux augmente. 
 
 ```{r,eval=FALSE}
 #graphique de R finale en fonction de I et R
@@ -280,7 +284,6 @@ graph.imageRIR <- function(fishing,freq,it=10,pas=0.1){
   
   matC <- matrix(0, nrow = 21,ncol = 26)
   matsd <- matrix(0, nrow = 21,ncol = 26)
-  
   
   f0<-fishing
   l<-freq
@@ -303,7 +306,7 @@ graph.imageRIR <- function(fishing,freq,it=10,pas=0.1){
   # Plot the matrix as an image with different colored pixels
   
   par(mfrow=c(1,2))
-  image.plot(x = x_values, y = y_values, t(matC), col = viridis(20), 
+  image.plot(x = x_values, y = y_values, t(matC), col = viridis(20), zlim=c(1,3),
              xlab = "impact", ylab = "Rugosité initiale", 
              main=c("moyenne de R finale",paste(c("fréq:1/",1/l,", fishing:",f0),collapse = "")))
   image.plot(x = x_values, y = y_values, t(matsd), col = viridis(20),
@@ -318,14 +321,13 @@ graph.imageRIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 
 
 
-# Discution 
+## Discution 
 
-Dans le cadre des analyse entre la rugosité et l'impact des ouragane avec trois niveau d'effort de peche plusieur élément sont ressortie des résultat. Un premier élément est que les trois simulations possèdent une large étendue d'écart-type, les écarts maximum allant jusqu'à 30% pour une même simulation. Un écart-type plus prononcer équivaut a une intabilité entre les populations de l'Ecosysteme. 
+Dans le cadre des analyses entre la rugosité et l'impact des ouragane avec trois niveau d'effort de peche plusieur élément sont ressortie des résultat. Un premier élément est que plus l'impact est élevé, plus la situation des coraux est instable. Cela est cohérent avec le modele puisque les impact maximum peuveut affecter enormement les populations des coraux. Toutefois, il est interessant de noter que cette tendance est légère dans les cas d'effort de peche faible et moyenne. L'impact des ouragant se fait vraiment resentir quand on a un effort de peche élever. Avec un niveau de peche éléver, cela a un impact important sur la population de poisson peroquet. Cette diminution va venir impacter la rugosité minimal pour qu'il est résilience des coraux. Ainsi, lors d'ouragan a fort impact, la rugosité est plus fortement affecter et a plus tendance a franchir le seuil limite de résilence des coraux. 
 
+Un deuxieme élément interessant est que les trois simulations possèdent une large étendue d'écart-type, les écarts maximum allant jusqu'à 30% pour une même simulation. Un étendue large d'écartype démontre une intabilité au niveau des population avec les même condition de départ. Ainsi, 
 
 Il est interessant de noter qu'avec un effort de peche plus important, la rugosité minimal pour une résilence des coraux augmente. De plus, un tendance générale soutient que plus l'impact est élver, plus il y a d'instabilité dans la situation des coraux.
-
-Premierement, il y a tres peux de fluxtuation dans le graphique qui represent l'état des récif coralien avec un effort de peche de 1. En effet, peu import le niveau de rugosité de départ à l'exption de 1 très peu de fluctuation est noté. Cela implique qu'avec un niveau d'effort de peche faible l'ecosysteme se rétablie tres bien peu importe le niveau d'impact des ouragans. 
 
 Dans le cas, 
 
