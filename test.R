@@ -1,3 +1,4 @@
+library(fields)
 corailstochastiquev2 <- function (R0,f,lambda=1/15,impact=1,dt=1,graph=FALSE){
   #on instaure une étendue de temps
   tmax <- 100
@@ -61,7 +62,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/15,impact=1,dt=1,graph=FALSE){
       
     }else if (0 < te & te < 8) {
       te <- te + 1
-      dommC <- C*0.08*(impact/2)
+      dommC <- C*(0.04+0.04*((impact-1)*0.5))
       dommM <- 0
       dommR <- 0
     }else{
@@ -110,7 +111,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/15,impact=1,dt=1,graph=FALSE){
 }
 
 
-corailstochastiquev2(R0=2.6,f=0.4,lambda=1/15,impact=1,dt=0.1,graph = T)
+corailstochastiquev2(R0=2,f=0.6,lambda=1/15,impact=1,dt=0.1,graph = T)
 
 graph.imageCIf <- function(R0,freq,it=10,pas=0.1){
   
@@ -228,7 +229,7 @@ graph.imageCIR <- function(fishing,freq,it=10,pas=0.1){
              main=c("écart-type de C finale",paste(c("fréq:1/",1/l,", fishing:",f0),collapse = "")))
 }
 graph.imageCIR(fishing = 0.1, freq = 1/15, it=2, pas = 0.5)
-graph.imageCIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
+graph.imageCIR(fishing = 0.3, freq = 1/15, it=2, pas = 0.5)
 graph.imageCIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 
 #graphique de R finale en fonction de I et R
