@@ -533,4 +533,7 @@ legend("topright", legend = c("/9 ans", "/15 ans","/30 ans"),
        lwd = 1.5, bg = "white",cex = 0.65)
 ```
 
-Interprétation : 
+###Interprétation : 
+
+Après analyse des résultats, on remarque facilement que la pêche est le facteur qui a l'effet le plus clair sur le corail, réduisant grandement la possibilité que le corail se rétablisse. Il semble que le couvert de corail soit légèrement moins résilient à la pêche quand les ouragans sont moins fréquents et de faible intensité, mais cette tendance s'inverse quand les impacts sont modérés ou importants. La rugosité, elle, arrive aussi, semble supporter de plus grands niveaux de pêche sans s'effondrer quand les ouragans sont plus fréquents quand l'impact est faibles, bien que cette tendance semble s'estomper quand l'impact augmente. Toutefois quand les ouragans sont moins fréquents et violents et que l'effort de pêche est assez bas, la rugosité et le couvert de corail se rétablit à des niveaux plus hauts. Ces résultats pointent vers l'importance de considérer l'application de mesures de restriction à la pêche dans les zones ou les ouragans sont moins fréquents et/ou plus violents, car le corail est plus fragile dans ces endroits et car le gain d'une petite réduction de l'effort de pêche peut permettre une amélioration importante de l'état du corail, donc une meilleure efficacité de conservation. 
+
