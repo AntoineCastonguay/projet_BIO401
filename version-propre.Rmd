@@ -105,13 +105,12 @@ Et où q est un processus de saut de Poisson avec un taux de saut λ tel que dq 
 6. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des poisson perroquets.  
 7. Les macroalgues on le même niveau de dommage peu importe le niveau d'impact des ouragan.  
 8. Les ouragans ont un impact et une féquense constante sur toute la duré de la simulation.  
-9. Les effets des ouragans sont immédiat et instantané sur les population de l'écosystème.
+9. Les effets des ouragans sont immédiat sur les population de l'écosystème.
 10. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
 11. Un ouragan affecte l'ensemble de l'écosysteme de facon égale. 
 12. Les ouragan suit un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.
 13. Tous les parametres du modele sont représentatif de la situation réel de l'écosysteme.
 14. Il est impossible pour le corail et les macroalgues de s'éteindre totalement.
-
 
 ### Calcul :
 

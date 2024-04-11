@@ -76,7 +76,6 @@ $F() = 0.0512 + 0.0176*te$ avec un maximun de F() = 0.5.
 | Y | entre 0 et 1 | Le gazon d'algue correspond a tout ce qui n'est pas corail et macroalgue. |
 </div>
 
-
 Afin d'ajouter au modèle stochastique de l'article de Blackwood et al.(2011), nous avons modifié légèrement le modèle pour tenter de se débarrasser des catégories d'impact en les remplaçant par un coefficient d'impact continu. Cette démarche a pour but de pouvoir plus facilement visualiser la gradation de l'effet de la puissance des ouragans sur la résilience du corail dans diverses situations. Dans un contexte de changements climatiques, nous nous attendons à percevoir des différences au niveau de l'ampleur des phénomènes météorologiques tels que les ouragans. Nous nous sommes basés sur le document de Cervantes et al. (2020) sur les relations entre les caractéristiques des ouragans, la structure du récif de corail et l'impact de ces perturbations sur la rugosité et le couvert. 
 
 Avant tout, nous nous sommes débarrassé des 3 niveaux d'impacts qui étaient implémentés dans le modèle proposé par Blackwood et al. (2011). Dans leur cas, un ouragan avec impact qualifié de fort ou modéré a pour effet de réduire d'un pourcentage $F+\sigma\epsilon$ le couvert de corail, où $F$ est une fonction du temps écoulé depuis le dernier ouragan $t_o$, de sorte que l'impact soit en moyenne linéairement plus grand plus le dernier ouragan date, jusqu'à concurrence de 50% de réduction, qui est atteinte quand le dernier ouragan s'est passé il y a 25.5 années ou plus. La composante $\sigma$ est une variance fixée à 0,05 et $\epsilon$ est tiré aléatoirement d'une distribution normale, le tout pour conférer une certaine variabilité à l'effet sur le couvert de corail. Les ouragans de faible puissance sont ici considérés comme ne réduisant pas significativement le couvert de corail. L'effet sur la rugosité est fixé à 50% de réduction, sur une échelle allant de 3 à 1 (50% d'une rugosité de 3 résulte en une rugosité de 2), dans le cas d'un ouragan à impact fort, à 5% de réduction pour un ouragan à faible intensité tandis que dans le cas d'un ouragan d'intensité modéré, la réduction de la rugosité est calculée de la même façon que celle du couvert de corail. Le dommage causé aux macroalgues est considéré par ce modèle comme constant peu importe l'intensité des ouragans, avec une perte ($m_H$) de 80% du couvert M lors d'un évènement d'ouragan.
@@ -107,8 +106,6 @@ Ouragan à impact faible:
 
 Le $F$ est déterminé par l'équation suivante: $F(t_o)=0.$
 
-
-
 Pour le modèle que nous proposons, la première modification apportée est que nous fixons un coefficient d'impact $i$ pour la simulation qui agit sur le dommage subi par chaque composante. Ainsi ce coefficient d'impact d'une valeur variant entre 0 et 1 dicte le dommage subi par les différents éléments de la simulation. Nous ajustons l'étendue possible de $dC$, $dM$ et $dR$ afin que la variabilité des dommages entre un coefficient d'impact à 1 et un coefficient d'impact à 0 corresponde aux limites de ce qui est observé par le document de Cervantes et al. (2020). Ainsi, la perte de couvert de corail est également proportionnel à $F$, mais est bornée à 0% quand $i\in [0,0.25]$, correspondant à un ouragan de trop faible intensité pour réduire le couvert coralien, et varie linéairement entre 0% et 75% quand $I\in[0.25,1]$. Pour le couvert de macroalgues, le dommage subi reste en moyenne le même, soit 80%, mais le coefficient d'impact ajoute une variabilité de 25% qui fait en sorte que le dommage varie proportionnellement entre 60% et 100% selon la valeur de $I$. Cette modification pallie partiellement le fait qu'en situation d'ouragan plutôt faible, les macroalgues sont désavantagées par rapport au corail. Pour la rugosité, la littérature semblait démontrer que la proportion de rugosité perdue était proportionnelle à la valeur de rugosité elle même, nous avons donc ajouté la composante $G=0.1\times (R-1)$ ainsi qu'une relation avec $I$ faisant ainsi varier $dR$ entre 0 et 50% selon $R$ et $I$, mais seulement limité entre 0% et 5% si $I=0$. 
 Une autre modification que nous avons apportée au modèle est une forme d'accélération du rythme auquel la valeur de F augmente. Avec les années qui passent, nous supposons que les dégâts des ouragans deviendront plus grave plus rapidement en fonction du temps écoulé depuis le dernier ouragan, à cause des changements climatiques. Ainsi, si au début de la simulation, il faut 25.5 années pour que F atteigne son maximum à 0.5, graduellement cette période sera raccourcie pour être de seulement 17 années à la fin. Les équations déterminant le dommage à chaque composante du système lors d'un ouragan est donc défini par les équations suivantes:
 
@@ -117,9 +114,7 @@ Une autre modification que nous avons apportée au modèle est une forme d'accé
 +$dR=(R-1)\times(G + \sigma\epsilon)\times(2.25\times I+0.25)$ où $G=0.1\times (R-1)$
 +$F(t_o)=0.0512+0.0176\times t_o\times(1+t/200)$ où si $F(t_o)>0.5$ alors $F(t_o)=0.5$
 
-
-## Résultat
-Dans un premier lieu, la fonction de la simulation du modele XXX a été dévelloper. La fonction prend en argument la rugosité de départ (R0), l'effort de pêche (f), la probabilité qu'un ouragan survienne dans la zone des récit corailien par an (lamda), le niveau d'impact de l'ouragan (impact) et la duré des pas de temps sachant que 1 équivaut a faire un pas de temps d'une année (dt). Après une simulation de 100 ans, la fonction nous retourne la valeur de couverture du paysage par le corail et sa rugosité.
+La fonction de la simulation du modele XXX a été dévelloper. La fonction prend en argument la rugosité de départ (R0), l'effort de pêche (f), la fréquence moyenne estimer des ouragan dans la zone des récit corailien (lamda), le niveau d'impact de l'ouragan (impact) et la duré des pas de temps sachant que 1 équivaut a faire un pas de temps d'une année (dt). Après une simulation de 100 ans, la fonction nous retourne la valeur de couverture du paysage par le corail et sa rugosité.
 
 ```{r}
 corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
@@ -228,6 +223,8 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 }
 ```
 
+## Résultat
+
 La relation entre la rugosité et le niveau d'impact des ouragants sur les récif corialien avec 3 niveau d'effort de peche : 
 
 Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qui il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
@@ -314,7 +311,8 @@ graph.imageRIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
 graph.imageRIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 
 ```
-Les résultats ont montré peu de fluctuations selon l'intensité des ouragans dans le cas des efforts de pêche faibles et moyens. Cependant, il est possible d'observer plus d'instabilité en cas d'ouragans de forte intensité. De plus, une zone d'instabilité ou de dominance des macroalgues se trouve sous une rugosité de 1.3. Par alleiur pour un effort de pêche élevé, l'impact des ouragans est plus prononcé. Plus l'impact des ouragans est important, plus la rugosité nécessaire à la résilience des coraux est grande. Il est aussi possible de noter une forte augmentation de rugosité minimal pour une résilance des coraux qui est passer de 1.3 à 2 dans un cas avec des faible impact d'ouragan et 2.5 avec de fort impact.
+
+Il est important de noter que dans le graphique avec l'effort de pêche de 0.1 que 
 
 La relation entre l'effort de peche et le niveau d'impact des ouragant sur les récif corialien avec 3 niveau de rugosité de départ :
 
@@ -402,6 +400,7 @@ Dans ces résultat, il est possible de remarquer un leger tendance. Plus l'impac
 
 # Discution 
 
+Les résultats ont montré peu de fluctuations selon l'intensité des ouragans dans le cas des efforts de pêche faibles et moyens. Cependant, il est possible d'observer plus d'instabilité en cas d'ouragans de forte intensité. De plus, une zone d'instabilité ou de dominance des macroalgues se trouve sous une rugosité de 1.3. Par alleiur pour un effort de pêche élevé, l'impact des ouragans est plus prononcé. Plus l'impact des ouragans est important, plus la rugosité nécessaire à la résilience des coraux est grande. Il est aussi possible de noter une forte augmentation de rugosité minimal pour une résilance des coraux qui est passer de 1.3 à 2 dans un cas avec des faible impact d'ouragan et 2.5 avec de fort impact.
 
 
 Dans le cas, 
