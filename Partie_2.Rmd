@@ -82,7 +82,6 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   t <- 0
   #le temps au dernier ouragan, en tenant compte que la simulation ne commence pas nécessairement juste après un ouragan
   to <- runif(1,0,25.5)
-  imp<-impact
   
   #on pose les valeurs de départ et les paramètres
   C <- 0.56
@@ -115,8 +114,6 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   
   while (t<tmax){
     
-    if(imp==2)impact <- runif(1)
-    
     #on effectue le tirage pour déterminer si il y a ou pas ouragan
     ouragan <- pmin(rpois(1,lambda*dt),1)
     #si oui ou non, on ajuste dq
@@ -135,7 +132,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
       #différents dommage selon valeur d'impact
       
       #on calcule les dommages d'un fort ouragan
-      dommC <- C*(F + o*runif(1))*pmax(2*impact-0.5,0)
+      dommC <- C*(F + o*runif(1))*pmax(2*impact-0.6,0)
       dommM <- M*mH*(1+impact*0.25)
       dommR <- (R-1)*(G + o*runif(1))*(impact*2.25+0.25)
       
@@ -361,13 +358,14 @@ graph.imageRIf <- function(R0,freq,it=10,pas=0.1){
 # graph.imageRIf(R0=2.1,freq = 1/15,it=5,pas = 0.5)
 # graph.imageRIf(R0=2.4,freq = 1/15,it=5,pas = 0.5)
 ```
+
 ```{r}
 graph.imageCRf <- function(freq,it=10,pas=0.1){
   
   matC <- matrix(0, nrow = 21,ncol = 26)
   matsd <- matrix(0, nrow = 21,ncol = 26)
   
-  imp<-1
+  imp<-2
   l<-freq
   for (i in 1:21) {
     for (j in 1:26){
@@ -396,7 +394,7 @@ graph.imageCRf <- function(freq,it=10,pas=0.1){
              xlab = "Effort de pêche", ylab = "Rugosité initiale",
              main=c("écart-type de C finale",paste(c("fréq:1/",1/l),collapse = "")))
 }
-graph.imageCRf(freq = 1/15,it=20,pas = 0.2)
+graph.imageCRf(freq = 1/9,it=20,pas = 0.2)
 ```
 
 
