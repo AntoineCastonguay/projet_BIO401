@@ -19,6 +19,9 @@ Ils aborent premierement la compétition de l'espace entre les macroalgue et les
 Dans notre étude, nous avons cherché à rendre ce modèle plus réaliste en y ajoutant une composante plus variable et aléatoire simulant de manière plus précise l'impact réel des ouragans. De plus, nous avons intégré une augmentation de la l'intensité des ouragan au fil des années, ce qui reflète la situation actuelle avec les changements climatiques.
 
 ## Méthode
+Dans ce modele, nous avons concentrer nos efforts sur F() et G() ansi qu'un nouveau parametre i qui caractérise la farce de l'impact. 
+
+Notre objectif est d'améliorer
 
 Modèle avec implémentation d'ouragans stochastique:  
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)idq}$  
@@ -117,6 +120,7 @@ Une autre modification que nous avons apportée au modèle est une forme d'accé
 
 ## Résultat
 Dans un premier lieu, la fonction de la simulation du modele XXX a été dévelloper. La fonction prend en argument la rugosité de départ (R0), l'effort de pêche (f), la probabilité qu'un ouragan survienne dans la zone des récit corailien par an (lamda), le niveau d'impact de l'ouragan (impact) et la duré des pas de temps sachant que 1 équivaut a faire un pas de temps d'une année (dt). Après une simulation de 100 ans, la fonction nous retourne la valeur de couverture du paysage par le corail et sa rugosité.
+
 ```{r}
 corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   #on instaure une étendue de temps
@@ -124,7 +128,6 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   t <- 0
   #le temps au dernier ouragan, en tenant compte que la simulation ne commence pas nécessairement juste après un ouragan
   to <- runif(1,0,25.5)
-  imp<-impact
   
   #on pose les valeurs de départ et les paramètres
   C <- 0.56
@@ -157,8 +160,6 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   
   while (t<tmax){
     
-    if(imp==2)impact <- runif(1)
-    
     #on effectue le tirage pour déterminer si il y a ou pas ouragan
     ouragan <- pmin(rpois(1,lambda*dt),1)
     #si oui ou non, on ajuste dq
@@ -177,8 +178,13 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
       #différents dommage selon valeur d'impact
       
       #on calcule les dommages d'un fort ouragan
+<<<<<<< HEAD
       dommC <- C*(F + o*runif(1))*pmax(2*impact-0.5,0)
       dommM <- M*mH*(0.75+impact*0.5)
+=======
+      dommC <- C*(F + o*runif(1))*pmax(2*impact-0.6,0)
+      dommM <- M*mH*(1+impact*0.25)
+>>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
       dommR <- (R-1)*(G + o*runif(1))*(impact*2.25+0.25)
       
     }else{
@@ -230,9 +236,13 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 La relation entre la rugosité et le niveau d'impact des ouragants sur les récif corialien avec 3 niveau d'effort de peche : 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qui il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
+=======
+Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qu'il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
+>>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
 
 ```{r,eval=FALSE}
 
@@ -272,9 +282,9 @@ graph.imageCIR <- function(fishing,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Rugosité initiale",
              main=c("écart-type de C finale",paste(c("fréq:1/",1/l,", fishing:",f0),collapse = "")))
 }
-graph.imageCIR(fishing = 0.1, freq = 1/15, it=5, pas = 0.1)
-graph.imageCIR(fishing = 0.4, freq = 1/15, it=5, pas = 0.1)
-graph.imageCIR(fishing = 0.7, freq = 1/15, it=5, pas = 0.1)
+graph.imageCIR(fishing = 0.1, freq = 1/15, it=2, pas = 0.5)
+graph.imageCIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
+graph.imageCIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 
 #graphique de R finale en fonction de I et R
 graph.imageRIR <- function(fishing,freq,it=10,pas=0.1){
@@ -311,17 +321,20 @@ graph.imageRIR <- function(fishing,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Rugosité initiale",
              main=c("écart-type de R finale",paste(c("fréq:1/",1/l,", fishing:",f0),collapse = "")))
 }
-graph.imageRIR(fishing = 0.1, freq = 1/15, it=5, pas = 0.1)
-graph.imageRIR(fishing = 0.4, freq = 1/15, it=5, pas = 0.1)
-graph.imageRIR(fishing = 0.7, freq = 1/15, it=5, pas = 0.1)
+graph.imageRIR(fishing = 0.1, freq = 1/15, it=2, pas = 0.5)
+graph.imageRIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
+graph.imageRIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 
 ```
-
-Les résultats ont démontrer tres peux de fluctuation selon l'intensité de ouragan dans le cas des effort de peche faible et moyenne. Toutefois, avec un effort de peche élever, 
+Les résultats ont montré peu de fluctuations selon l'intensité des ouragans dans le cas des efforts de pêche faibles et moyens. Cependant, il est possible d'observer plus d'instabilité en cas d'ouragans de forte intensité. De plus, une zone d'instabilité ou de dominance des macroalgues se trouve sous une rugosité de 1.3. Par alleiur pour un effort de pêche élevé, l'impact des ouragans est plus prononcé. Plus l'impact des ouragans est important, plus la rugosité nécessaire à la résilience des coraux est grande. Il est aussi possible de noter une forte augmentation de rugosité minimal pour une résilance des coraux qui est passer de 1.3 à 2 dans un cas avec des faible impact d'ouragan et 2.5 avec de fort impact.
 
 La relation entre l'effort de peche et le niveau d'impact des ouragant sur les récif corialien avec 3 niveau de rugosité de départ :
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+Pour réprensenté les résultat d'une facon différente, nous avons mis en relation l'effort de peche et le niveau d'impact des ouragant. Cette approche permet de mieux voir l'impact sur différente rugosité de départ.
+>>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
 
 =======
 Pour réprensenter les résultats d'une facon différente, nous avons mis en relation l'effort de pêche et le niveau d'impact des ouragant. Cette approche permet 
@@ -362,15 +375,9 @@ graph.imageCIf <- function(R0,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Effort de pêche",
              main=c("écart-type de C finale",paste(c("fréq:1/",1/l,", rug. ini:",R0),collapse = "")))
 }
-graph.imageCIf(R0=2.8,freq = 1/15,it=10,pas = 0.1)
-# graph.imageCIf(R0=1.4,freq = 1/15,it=2,pas = 0.25)
-# graph.imageCIf(R0=1.6,freq = 1/15,it=2,pas = 0.25)
-# graph.imageCIf(R0=1.8,freq = 1/15,it=2,pas = 0.25)
-# graph.imageCIf(R0=2.0,freq = 1/15,it=2,pas = 0.25)
-# graph.imageCIf(R0=2.2,freq = 1/15,it=2,pas = 0.25)
-# graph.imageCIf(R0=2.4,freq = 1/15,it=2,pas = 0.25)
-# graph.imageCIf(R0=2.6,freq = 1/15,it=2,pas = 0.25)
-# graph.imageCIf(R0=2.8,freq = 1/15,it=2,pas = 0.25)
+graph.imageCIf(R0=1.8,freq = 1/15,it=2,pas = 0.5)
+graph.imageCIf(R0=2.1,freq = 1/15,it=2,pas = 0.5)
+graph.imageCIf(R0=2.4,freq = 1/15,it=2,pas = 0.5)
 
 #graphique de R finale en fonction de I et f
 graph.imageRIf <- function(R0,freq,it=10,pas=0.1){
@@ -406,48 +413,21 @@ graph.imageRIf <- function(R0,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Effort de pêche",
              main=c("écart-type de R finale",paste(c("fréq:1/",1/l,", rug. ini:",R0),collapse = "")))
 }
-# graph.imageRIf(R0=1.8,freq = 1/15,it=5,pas = 0.5)
-# graph.imageRIf(R0=2.1,freq = 1/15,it=5,pas = 0.5)
-# graph.imageRIf(R0=2.4,freq = 1/15,it=5,pas = 0.5)
+graph.imageRIf(R0=1.8,freq = 1/15,it=2,pas = 0.5)
+graph.imageRIf(R0=2.1,freq = 1/15,it=2,pas = 0.5)
+graph.imageRIf(R0=2.4,freq = 1/15,it=2,pas = 0.5)
 ```
-```{r}
-graph.imageCRf <- function(freq,it=10,pas=0.1){
-  
-  matC <- matrix(0, nrow = 21,ncol = 26)
-  matsd <- matrix(0, nrow = 21,ncol = 26)
-  
-  imp<-1
-  l<-freq
-  for (i in 1:21) {
-    for (j in 1:26){
-      res <- vector(length = 0)
-      for (z in 1:it) {
-        R1 <- i*0.1+0.9
-        f0 <- j*0.05-0.05
-        
-        w <- corailstochastiquev2(R0=R1,f=f0, lambda = l,impact = imp,dt=pas, graph = F)[1]
-        res<-c(res,w)
-      }
-      matC[i,j]<-mean(res)
-      matsd[i,j]<-sd(res)
-    }
-  }
-  
-  x_values <- seq(0, 1, length.out = ncol(matC))
-  y_values <- seq(1, 3, length.out = nrow(matC))
-  # Plot the matrix as an image with different colored pixels
-  
-  par(mfrow=c(1,2))
-  image.plot(x = x_values, y = y_values, t(matC), col = viridis(20), 
-             xlab = "Effort de pêche", ylab = "Rugosité initiale", 
-             main=c("moyenne de C finale",paste(c("fréq:1/",1/l),collapse = "")))
-  image.plot(x = x_values, y = y_values, t(matsd), col = viridis(20),
-             xlab = "Effort de pêche", ylab = "Rugosité initiale",
-             main=c("écart-type de C finale",paste(c("fréq:1/",1/l),collapse = "")))
-}
-graph.imageCRf(freq = 1/15,it=20,pas = 0.2)
-```
+Dans ces résultat, il est possible de remarquer un leger tendance. Plus l'impact des ouragan est elever, plus l'effort de peche doit etre réduit pour permetre la résilence des corail.
+
+# Discution 
 
 
+
+
+Nos résultats ont montré très peu d'impact des ouragans sur les récifs coralliens, à l'exception d'un très haut niveau d'effort de pêche. 
+
+Cela est cohérent avec la recherche de XXX avec la partie tres peu d'impact. Il est conclu que les ouragans ne sont plus l'impact majeur qui affecte la détérioration des récifs coralliens. Trois raisons pourraient expliquer cette observation. Tout d'abord, les dommages causés aux infrastructures humaines par les ouragans peuvent réduire le nombre de pêcheurs ou de touristes dans les années qui suivent un ouragan, diminuant ainsi le stress sur les récifs (Bacon, 1989). Deuxièmement, les ouragans peuvent diminuer la sensibilité des coraux à d'autres facteurs de stress, comme le blanchiment des coraux, en réduisant temporairement les températures locales de la mer (Kramer et Kramer, 2000), rendant ainsi les coraux plus résistants à d'autres impacts des tempêtes. Enfin, il est plus probable que les ouragans réduisent l'abondance des colonies coralliennes sensibles, telles que les colonies ramifiées et tabulaires, qui dominent les récifs rarement exposés aux tempêtes (Woodley, 1989; Liddell et Oldhorst, 1992), limitant ainsi les opportunités pour les ouragans suivants de causer d'autres dommages.
+
+Dans le cas, 
 
 # Référence
