@@ -19,6 +19,9 @@ Ils aborent premierement la compétition de l'espace entre les macroalgue et les
 Dans notre étude, nous avons cherché à rendre ce modèle plus réaliste en y ajoutant une composante plus variable et aléatoire simulant de manière plus précise l'impact réel des ouragans. De plus, nous avons intégré une augmentation de la l'intensité des ouragan au fil des années, ce qui reflète la situation actuelle avec les changements climatiques.
 
 ## Méthode
+Dans ce modele, nous avons concentrer nos efforts sur F() et G() ansi qu'un nouveau parametre i qui caractérise la farce de l'impact. 
+
+Notre objectif est d'améliorer
 
 Mise en œuvre d'un ouragan stochastique:  
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)idq}$  
@@ -75,6 +78,7 @@ $F() = 0.0512 + 0.0176*te$ avec un maximun de F() = 0.5.
 
 ## Résultat
 
+Dans cette section, nous décrivons l'impact des les changements que nous avons effectuer.
 ```{r}
 corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
   #on instaure une étendue de temps
