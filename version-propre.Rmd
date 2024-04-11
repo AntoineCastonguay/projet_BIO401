@@ -13,7 +13,7 @@ output: html_document
 
 ### Question biologique : 
 
-Comment la résilience (persistance) des récifs coralliens varie-t-elle selon l'effort de pêche, l'impact des ouragans et la rugosité?
+Comment la résilience des récifs coralliens soit la capacité a ne pas s'effondre suite a un stresse ou un pertubation varie-t-elle selon l'effort de pêche, l'impact des ouragans et la rugosité intiale?
 
 ### Hypothèse :
 
