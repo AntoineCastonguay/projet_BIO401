@@ -310,7 +310,7 @@ graph.imageCIf <- function(R0,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Effort de pêche",
              main=c("écart-type de C finale",paste(c("fréq:1/",1/l,", rug. ini:",R0),collapse = "")))
 }
-graph.imageCIf(R0=2.8,freq = 1/15,it=10,pas = 0.1)
+graph.imageCIf(R0=1.2,freq = 1/15,it=10,pas = 0.1)
 # graph.imageCIf(R0=1.4,freq = 1/15,it=2,pas = 0.25)
 # graph.imageCIf(R0=1.6,freq = 1/15,it=2,pas = 0.25)
 # graph.imageCIf(R0=1.8,freq = 1/15,it=2,pas = 0.25)
@@ -396,7 +396,5 @@ graph.imageCRf <- function(freq,it=10,pas=0.1){
 }
 graph.imageCRf(freq = 1/9,it=20,pas = 0.2)
 ```
-
-
 
 # Référence
