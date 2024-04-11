@@ -62,7 +62,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/15,impact=1,dt=1,graph=FALSE){
       
     }else if (0 < te & te < 8) {
       te <- te + 1
-      dommC <- C*(0.04+0.04*((impact-1)*0.5))
+      dommC <- C*(0.04+0.04*((impact-1)*0.75))
       dommM <- 0
       dommR <- 0
     }else{
@@ -111,7 +111,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/15,impact=1,dt=1,graph=FALSE){
 }
 
 
-corailstochastiquev2(R0=2,f=0.6,lambda=1/15,impact=1,dt=0.1,graph = T)
+corailstochastiquev2(R0=2.2,f=0.6,lambda=1/9,impact=1,dt=0.1,graph = T)
 
 graph.imageCIf <- function(R0,freq,it=10,pas=0.1){
   
@@ -146,15 +146,11 @@ graph.imageCIf <- function(R0,freq,it=10,pas=0.1){
              xlab = "impact", ylab = "Effort de pêche",
              main=c("écart-type de C finale",paste(c("fréq:1/",1/l,", rug. ini:",R0),collapse = "")))
 }
-graph.imageCIf(R0=1.2,freq = 1/15,it=2,pas = 0.5)
 graph.imageCIf(R0=1.4,freq = 1/15,it=2,pas = 0.5)
-graph.imageCIf(R0=1.6,freq = 1/15,it=2,pas = 0.5)
 graph.imageCIf(R0=1.8,freq = 1/15,it=2,pas = 0.5)
 graph.imageCIf(R0=2.0,freq = 1/15,it=2,pas = 0.5)
-graph.imageCIf(R0=2.2,freq = 1/15,it=5,pas = 0.1)
-graph.imageCIf(R0=2.4,freq = 1/15,it=2,pas = 0.5)
+graph.imageCIf(R0=2.2,freq = 1/15,it=2,pas = 0.5)
 graph.imageCIf(R0=2.6,freq = 1/15,it=2,pas = 0.5)
-graph.imageCIf(R0=2.8,freq = 1/15,it=2,pas = 0.5)
 
 #graphique de R finale en fonction de I et f
 graph.imageRIf <- function(R0,freq,it=10,pas=0.1){

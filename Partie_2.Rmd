@@ -188,7 +188,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 
 La relation entre la rugosité et le niveau d'impact des ouragants sur les récif corialien avec 3 niveau d'effort de peche : 
 
-Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qui il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
+Pour répondre a la question des effets des différente intensité des ouragans sur les récifs corailiens à long terme, on s'est dabord interesser à la relation qu'il y avait entre la rugosité de départ et le niveau de l'intesité des ouragants. Nous avons fixer la fréquence des ouragan sur une meme zone de récif coralien avec une probabilité d'environs 1 aux 15 année et avons étudier trois différent effort de pêche soit 0.1, 0.4 et 0.7. C'est trois effort de peche represent un niveau faible, moyen et fort de peche. 
 
 ```{r}
 library(fields)
@@ -271,8 +271,7 @@ graph.imageRIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
 graph.imageRIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 
 ```
-
-Les résultats ont démontrer tres peux de fluctuation selon l'intensité de ouragan dans le cas des effort de peche faible et moyenne. Il quand meme possible d'observer plus d'instabilité a fort impact. Avec un effort de peche élever, l'impact des ouragan est toutefois plus prononcer. Plus l'impact des ouragan est important, plus la rugosité necessaire a la résilence des corail est importante. 
+Les résultats ont montré peu de fluctuations selon l'intensité des ouragans dans le cas des efforts de pêche faibles et moyens. Cependant, il est possible d'observer plus d'instabilité en cas d'ouragans de forte intensité. De plus, une zone d'instabilité ou de dominance des macroalgues se trouve sous une rugosité de 1.3. Par alleiur pour un effort de pêche élevé, l'impact des ouragans est plus prononcé. Plus l'impact des ouragans est important, plus la rugosité nécessaire à la résilience des coraux est grande. Il est aussi possible de noter une forte augmentation de rugosité minimal pour une résilance des coraux qui est passer de 1.3 à 2 dans un cas avec des faible impact d'ouragan et 2.5 avec de fort impact.
 
 La relation entre l'effort de peche et le niveau d'impact des ouragant sur les récif corialien avec 3 niveau de rugosité de départ :
 
@@ -356,10 +355,17 @@ graph.imageRIf(R0=1.8,freq = 1/15,it=2,pas = 0.5)
 graph.imageRIf(R0=2.1,freq = 1/15,it=2,pas = 0.5)
 graph.imageRIf(R0=2.4,freq = 1/15,it=2,pas = 0.5)
 ```
-Dans ces résultat, il est possible de remarquer un leger tendance. Plus l'impact des ouragan est elever, plus l'effort de peche doit etre réduit pour permetre au corail un résilence. 
+Dans ces résultat, il est possible de remarquer un leger tendance. Plus l'impact des ouragan est elever, plus l'effort de peche doit etre réduit pour permetre la résilence des corail.
 
 # Discution 
 
-Nos résutat on montrer tres peu d'impact des ouragant sur les récif corail à l'exeption a de tres au niveau d'effort de peche. 
+
+
+
+Nos résultats ont montré très peu d'impact des ouragans sur les récifs coralliens, à l'exception d'un très haut niveau d'effort de pêche. 
+
+Cela est cohérent avec la recherche de XXX avec la partie tres peu d'impact. Il est conclu que les ouragans ne sont plus l'impact majeur qui affecte la détérioration des récifs coralliens. Trois raisons pourraient expliquer cette observation. Tout d'abord, les dommages causés aux infrastructures humaines par les ouragans peuvent réduire le nombre de pêcheurs ou de touristes dans les années qui suivent un ouragan, diminuant ainsi le stress sur les récifs (Bacon, 1989). Deuxièmement, les ouragans peuvent diminuer la sensibilité des coraux à d'autres facteurs de stress, comme le blanchiment des coraux, en réduisant temporairement les températures locales de la mer (Kramer et Kramer, 2000), rendant ainsi les coraux plus résistants à d'autres impacts des tempêtes. Enfin, il est plus probable que les ouragans réduisent l'abondance des colonies coralliennes sensibles, telles que les colonies ramifiées et tabulaires, qui dominent les récifs rarement exposés aux tempêtes (Woodley, 1989; Liddell et Oldhorst, 1992), limitant ainsi les opportunités pour les ouragans suivants de causer d'autres dommages.
+
+Dans le cas, 
 
 # Référence
