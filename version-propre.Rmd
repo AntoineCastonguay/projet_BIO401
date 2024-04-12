@@ -13,7 +13,7 @@ output: html_document
 
 ### Question biologique : 
 
-Comment la résilience des récifs coralliens, soit la capacité à ne pas s'effondrer suite a un stress ou une perturbation varie-t-elle selon l'effort de pêche, l'impact des ouragans et la rugosité initiale?
+Comment la résilience des récifs coralliens, soit la capacité à ne pas s'effondrer suite a un stress ou une perturbation, varie-t-elle selon l'effort de pêche, l'impact des ouragans et la rugosité initiale?
 
 ### Hypothèse :
 
@@ -69,7 +69,7 @@ $\frac{dY}{dt} = \small{1 - M - C}$
 La capacité de support de l'environnement pour le poisson perroquet prend en compte l'abondance des algues, qui constituent leur nourriture, ainsi que la rugosité, qui constitue de l'habitat K(M + T, R).  
 $\small{K(M+T,R) = }\frac{(c1R + c2)}{K_{max}}\frac{\delta(M+Y)}{1 + v(M+Y)}$
 
-Modèle Nondimentionner par rapport aux taux de croissance des poisson perroquets par année avec rugosité fixe:  
+Modèle non-dimentionalisé par rapport au taux de croissance des poissons perroquet par année avec rugosité fixe:  
 $\frac{dC}{dts} = (\small{rTC - dC - aMC})\frac{1}{s}$   
 $\frac{dM}{dts} = (\small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY})\frac{1}{s}$   
 $\frac{dP}{dts} = \small{P(1 -} \frac{P}{\beta K(M+T,R)} \small{ - fP}$  
@@ -82,7 +82,7 @@ $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$
 $\frac{dR}{dt} = \small{h_GC(3-R) - h_E(1-C)(R-1)}$  
 $\frac{dY}{dt} = \small{1 - M - C}$ 
 
-Mise en œuvre d'un ouragan stochastique:  
+Ajout d'ouragans stochastiques:  
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)dq}$  
 $\small{dM = g_M(C,M,P,R,t)dt - Mm_Hdq}$  
 $\small{dP = g_P(C,M,P,R,t)dt}$  
@@ -121,7 +121,7 @@ library(viridis)
 ```
 
 ```{r}
-# Fonction pour le modele nondimentionner par rapport taux de croissance des poisson perroquet par année avec rugosité fixe : 
+# Fonction pour le modele non-dimentionalisé par rapport  au taux de croissance des poisson perroquet par année avec rugosité fixe : 
 interaction_coral <- function(t, vars, parms){
   with(as.list(c(parms, vars)), {
     
@@ -445,7 +445,7 @@ graph.imageR <- function(impact,freq,it=10,pas=0.1, graph=T, max=F){
 }
 ```
 
-### Résultat :
+### Résultats :
 
 Dans la figure 1, on représente les zones d'instabilités entre les populations de macroalgue et le corail. Ainsi, pour chaque rugosité fixe, on regarde pour chaque effort de pêche s'il y a une dominance du corail ou une dominance des macroalgues ou aucune domination. Cette zone qui n'a aucune domination représente la limite de l'effort de pêche pour une rugosité donner. 
 
@@ -485,6 +485,8 @@ On peut ainsi visualiser le résultat pour les 2 situations suivantes, par exemp
 ```{r, fig.dim=c(12,5)}
 graph.imageC(2,1/30,10,0.1)
 graph.imageC(2,1/9,10,0.1)
+graph.imageR(2,1/30,10,0.1)
+graph.imageR(2,1/9,10,0.1)
 ```
 
 On peut ensuite bâtir un graphique avec la valeur maximale de rugosité finale pour chacune des 9 simulations possibles d'impact et de fréquence variés:
@@ -529,6 +531,16 @@ legend("topright", legend = c("/9 ans", "/15 ans","/30 ans"),
        col = c("black","black","black"), pch = c(2,4,6), lty = c(1, 1),
        lwd = 1.5, bg = "white",cex = 0.65)
 ```
+
+Pour obtenir la figure 7 de l'article, il suffit de refaire les 2 mêmes fonctions image.graphC, mais en changeant la fonction `corailstochastique()` en modifiant le paramètre g à 1.6 (au lieu de 0.8).
+
+```{r}
+#faire les modifications dans la fonction 
+#corailstochastique() pour rouler
+#graph.imageC(2,1/30,10,0.1)
+#graph.imageC(2,1/9,10,0.1)
+```
+
 
 ### Interprétation : 
 

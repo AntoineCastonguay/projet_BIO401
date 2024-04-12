@@ -11,7 +11,7 @@ Par Antoince Castonguay et Félix Richard. L'AmigoTeam.
 antoine.castonguay@usherbrooke.ca  
 felix.richard3@usherbrooke.ca  
 
-## Résumer
+## Résumé
 
 Cette étude vise à améliorer la représentation des impacts des ouragans sur les récifs coralliens, en enrichissant le modèle de @blackwood_model-based_2011. Nous avons introduit une composante plus réaliste de l'impact des ouragans, ainsi qu'une augmentation de l'intensité des ouragans au fil des années, reflétant ainsi les changements climatiques actuels. Nos simulations montrent que les ouragans de forte intensité ont un impact important sur la stabilité des populations de coraux, lorsque l'effort de pêche est élevé tandis que pour un effort de pêche faible ou moyenne, l'impact est faible.
 
@@ -45,7 +45,7 @@ $\small{g_R(C,M,P,R,t) = h_GC(3-R) - h_E(1-C)(R-1)}$
 $\small{K(M+T,R) = }\frac{(c1R + c2)}{K_{max}}\frac{\delta(M+Y)}{1 + v(M+Y)}$
 
 <div style="width: 85%; margin: 0 auto;">
-#### Tableau 1 : Paramètre utiliser dans le modèle et leurs définitions.
+#### Tableau 1 : Paramètre utilisés dans le modèle et leurs définitions.
 | Paramètre | Valeur | Définition |
 |:--:|:----:|:--------------|
 | s | 0.49 | Taux de croissance du poisson-perroquet par année |
@@ -69,7 +69,7 @@ $\small{K(M+T,R) = }\frac{(c1R + c2)}{K_{max}}\frac{\delta(M+Y)}{1 + v(M+Y)}$
 | epsilon | entre 0 et 1 | Variable aléatoire suivant une distribution normale standard qui décrit la composante aléatoire des impacts des ouragans sur le corail |
 | i | entre 0 et 1 | Pourcentage d'impact des ouragans |
 
-#### Tableau 2 : Variable utiliser dans le modèle et leur définition ainsi que leurs limites.
+#### Tableau 2 : Variables utilisées dans le modèle et leur définition ainsi que leurs limites.
 | Variable | Valeur possible | Définition |
 |:--:|:----:|:--------------|
 | C | entre 0 et 1 | Corresponds à la proportion de couverture du paysage par le corail. Où 1 est une couverture complète et où 0 est l'extinction des coraux. |
@@ -230,7 +230,7 @@ corailstochastiquev2 <- function (R0,f,lambda=1/30,impact=0.5,dt=1,graph=FALSE){
 }
 ```
 
-## Résultat
+## Résultats
 
 Pour mieux comprendre comment répond la résilience du corail face à différentes combinaisons de force d'impact et de rugosité initiale, pour différents efforts de pêche, nous effectuons 10 simulations de 100 ans par combinaison de R et i, et ce pour les 3 différentes valeurs d'effort de pêche correspondant à un effort minime, modéré et élevé avec les valeurs suivantes: 0.1, 0.4 et 0.7. Ces valeurs sont tirées de nos propres observations dans les figures présentées par @blackwood_model-based_2011. Au bout de 100 ans, avec la paramétrisation utilisée, quand l'effort de pêche était aux alentours de 0.1, le corail se rétablissait très souvent. Quand l'effort de pêche était plus grand que 0.6, le corail finissait très souvent par s'effondrer au profit des macroalgues. La situation intermédiaire avec un effort de pêche à mi-chemin produisait différentes situations dépendamment de plusieurs facteurs. Nous avons donc considéré plus ou moins arbitrairement que 0.1, 0.4 et 0.7 représentaient respectivement un effort de pêche faible, moyen et fort.
 Les images générées ensuite représentent ainsi la moyenne et l'écart-type du résultat des 10 simulations. Nous faisons cela 2 fois, une fois avec le résultat en termes de couverture par le corail et une autre avec le résultat pour la rugosité après 100 ans. Pour toutes ces simulations, la fréquence moyenne estimée des ouragans est fixée à 1/15, correspondant à une fréquence intermédiaire d'un ouragan aux 15 ans, et le pas de temps est ajusté à 0.1 pour conférer une bonne résolution aux résultats tout en optimisant le temps nécessaire pour calculer chaque simulation.
