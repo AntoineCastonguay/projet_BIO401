@@ -116,6 +116,7 @@ Et où q est un processus de saut de Poisson avec un taux de saut λ tel que dq 
 ```{r}
 # Chargement de librairie
 library(deSolve)
+library(fields)
 library(viridis)
 ```
 
@@ -354,8 +355,6 @@ corailstochastique(R0=2.2, f= 0.5, lambda = 1/15,impact = 2,dt=0.1,graph = T)
 On peut ensuite construire les graphiques du couvert de corail final moyen ainsi que l'écart-type pour un éventail de rugosité initiale entre 1 et 3 et d'effort de pêche entre 0 et 1. La fonction utilisée pour cela est la suivante:
 
 ```{r}
-
-library(fields)
 graph.imageC <- function(impact,freq,it=10,pas=0.1){
   #on initie une matrice pour les moyennes et une autre pour les écarts-types
   #pour des images de 21 pixels de hauteur et 26 de largeur
@@ -400,7 +399,7 @@ graph.imageC <- function(impact,freq,it=10,pas=0.1){
 }
 ```
 
-Idem pour la moyenne ainsi que l'écart-type de la rugosité. La fonction utilisée pour cela est la suivante (ce sont les mêmes étapes que pour graph.imageC, seulement avec [2] pour obtenir la rugosité finale pour `corailstochastique()`, les étapes ne sont donc pas commentées) et les 2 mêmes simulations sont montrées à la fin:
+Idem pour la moyenne ainsi que l'écart-type de la rugosité. La fonction utilisée pour cela est la suivante (ce sont les mêmes étapes que pour graph.imageC, seulement avec [2] pour obtenir la rugosité finale pour `corailstochastique()`, les étapes ne sont donc pas commentées) :
 
 ```{r,fig.dim=c(12,5)}
 graph.imageR <- function(impact,freq,it=10,pas=0.1, graph=T, max=F){
@@ -444,7 +443,6 @@ graph.imageR <- function(impact,freq,it=10,pas=0.1, graph=T, max=F){
     print(max(matC))
   }
 }
-
 ```
 
 ### Résultat :
@@ -482,7 +480,7 @@ lines(x = fish.vec[,1], y = fish.vec[,9])
 par(mfrow=c(1,1))
 ```
 
-On peut ainsi visualiser le résultat pour les 2 situations suivantes, par exemple: la simulation avec ouragans à impacts modérés (2) d'une fréquence faible (30 ans) et la simulation avec ouragans à impacts modérés (2) d'une fréquence élevée:
+On peut ainsi visualiser le résultat pour les 2 situations suivantes, par exemple: la simulation avec ouragans à impacts modérés (2) d'une fréquence faible (30 ans) et la simulation avec ouragans à impacts modérés (2) d'une fréquence élevée (9 ans):
 
 ```{r, fig.dim=c(12,5)}
 graph.imageC(2,1/30,10,0.1)
