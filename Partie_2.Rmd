@@ -13,17 +13,19 @@ felix.richard3@usherbrooke.ca
 
 ## Résumer
 
+Cette étude vise à améliorer la représentation des impacts des ouragans sur les récifs coralliens, en enrichissant le modèle de Blackwood et al. (2011). Nous avons introduit une composante plus réaliste de l'impact des ouragans, ainsi qu'une augmentation de l'intensité des ouragan au fil des années, reflétant ainsi les changements climatiques actuels. Nos simulations montrent que les ouragans de forte intensité ont un impact important sur la stabilité des populations de coraux, lorsque l'effort de pêche est élevé. Avec un effort de peche faible ou moyenne, l'impact est faible.
+
 ## Introduction
-Pour lutter contre la dégradation des récifs coralliens, il est crucial d'agir pour préserver cette ressource inestimable qui favorise la biodiversité des océans. Le modèle développé par Blackwood, J.C., Hastings, A. et Mumby, P.J. en 2011 est particulièrement intéressant, car il décrit bien les effets de plusieurs stress et leurs interactions sur la survie des coraux à long terme. 
+Pour lutter contre la dégradation des récifs coralliens, il est crucial d'agir pour préserver cette ressource inestimable qui favorise la biodiversité des océans. Le modèle développé par Blackwood et al. en 2011 est particulièrement intéressant, car il décrit bien les effets de plusieurs stress et leurs interactions sur la survie des coraux à long terme. 
 
 Ils aborent premierement la compétition de l'espace entre les macroalgue et les coraux. Deuxiemement, ils ajoute au modele la relation consomateur-ressource entre les parrofishs et les macroalgues. En troisieme lieu, la rugosité des coraux est également considérée comme un élément crucial pour la capacité de soutien des populations de parrofishs, tandis que l'effort de pêche joue un rôle important sur la population de parrofishs. Enfin, le modèle inclut un élément stochastique représenté par les ouragans, qui ont un impact sur les populations de coraux, de macroalgues et sur la rugosité des coraux. 
 
-Dans notre étude, nous avons cherché à rendre ce modèle plus réaliste en y ajoutant une composante plus variable et aléatoire simulant de manière plus précise l'impact réel des ouragans. De plus, nous avons intégré une augmentation de la l'intensité des ouragan au fil des années, ce qui reflète la situation actuelle avec les changements climatiques.
+Dans notre étude, nous avons cherché à rendre ce modèle plus réaliste en y ajoutant une composante plus variable et aléatoire simulant de manière plus précise l'impact réel des ouragans. De plus, nous avons intégré une augmentation de l'intensité des ouragan au fil des années, ce qui reflète la situation actuelle avec les changements climatiques.
 
 ## Méthode
 Dans ce modele, nous avons concentrer nos efforts sur F() et G() ansi qu'un nouveau parametre i qui caractérise la farce de l'impact. 
 
-Notre objectif est d'améliorer
+Notre objectif est d'améliorer le
 
 Modèle avec implémentation d'ouragans stochastique:  
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)idq}$  
@@ -275,8 +277,7 @@ graph.imageCIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
 graph.imageCIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 ```
 
-Un premier élément à noter est qu'une tendance générale peut être observée, indiquant que plus l'impact est élevé, plus la situation des coraux est instable. Cette observation s'observe aussi dans les graphiques des l'écart-type. D'ailleur, on peut noter que l'étendue des écart-type est large. Pour une même simulation les écarts maximum peuveuent aller jusqu'à 30%. 
-Dautre part, il est interessant de noter qu'avec un effort de peche plus important, la rugosité minimal pour une résilence des coraux augmente. 
+Un premier élément à noter est qu'une tendance générale peut être observée dans le graphique présentant l'état du corail, indiquant que plus l'impact est élevé, plus la situation des coraux est instable. Cette observation s'observe aussi dans les graphiques des l'écart-type. D'ailleur, on peut noter que l'étendue des écart-type est large. Pour une même simulation les écarts maximum peuveuent aller jusqu'à 30%. Dautre part, il est interessant de noter qu'avec un effort de peche plus important, la rugosité minimal pour une résilence des coraux augmente. 
 
 ```{r,eval=FALSE}
 #graphique de R finale en fonction de I et R
@@ -319,16 +320,20 @@ graph.imageRIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
 
 ```
 
-
+Un élément notable des graphique présentant l'état de la rugosité apres un simulation est qu'ils ont tendance a s'équilibrer vers une rugosité de 2. De plus, la tendance d'une diminution selon l'impact des ourgans reste présente dans l'état de la rugosité comme dans l'état du corail. 
 
 ## Discution 
 
-Dans le cadre des analyses entre la rugosité et l'impact des ouragane avec trois niveau d'effort de peche plusieur élément sont ressortie des résultat. Un premier élément est que plus l'impact est élevé, plus la situation des coraux est instable. Cela est cohérent avec le modele puisque les impact maximum peuveut affecter enormement les populations des coraux. Toutefois, il est interessant de noter que cette tendance est légère dans les cas d'effort de peche faible et moyenne. L'impact des ouragant se fait vraiment resentir quand on a un effort de peche élever. Avec un niveau de peche éléver, cela a un impact important sur la population de poisson peroquet. Cette diminution va venir impacter la rugosité minimal pour qu'il est résilience des coraux. Ainsi, lors d'ouragan a fort impact, la rugosité est plus fortement affecter et a plus tendance a franchir le seuil limite de résilence des coraux. 
+Les récifs coralliens sont soumis à une variété de perturbations et de stresse, parmi lesquelles il y a les ouragans. Ces phénomènes météorologiques violents constituent une menace pour la stabilité et la santé des écosystèmes coralliens. L'exploration du rôle des ouragans en tant que perturbation pour les récifs coralliens est necessaire puisque les changement climatique augmente de plus en plus leur force et ansi leur impact.
 
-Un deuxieme élément interessant est que les trois simulations possèdent une large étendue d'écart-type, les écarts maximum allant jusqu'à 30% pour une même simulation. Un étendue large d'écartype démontre une intabilité au niveau des population avec les même condition de départ. Ainsi, 
+Les analyses sur la corrélation entre la rugosité des récifs et l'impact des ouragans, selon trois niveaux d'effort de pêche pour l'état des coraux ont révélé plusieurs éléments interessant. Tout d'abord, il est possible de constaté que plus l'impact des ouragans est élevé, plus la stabilité des populations de coraux est instable. Cette observation est en accord avec notre modèle, car les impacts majeurs qui est dans notre cas le maximun de dommage qu'un ouragan peut causé peuvent gravement perturber les écosystèmes coralliens, engendrant des déséquilibres importants. De plus, il est à noter que ces situations correspondent souvent à des ouragans survenant en fin de simulation. La gravité de l'impact prolonge le temps nécessaire à la récupération des coraux, laissant ainsi peu de temps pour un rétablissement complet avant la fin de la simulation.Toutefois, il est interessant de noter que cette tendance est légère quand les effort de peche sont faible ou moyenne. L'impact des ouragans se fait véritablement ressentir lorsque l'effort de pêche est élevé. Dans ce cas, la diminution des populations de poissons-perroquets a un effet significatif sur la rugosité minimale nécessaire à la résilience des coraux. En effet, la compétition accrue avec les macroalgues, résultant de la diminution des poissons-perroquets, compromet la capacité des récifs à maintenir leur résilience. Par conséquent, lors d'ouragans de forte intensité, la rugosité des récifs est davantage affectée et a tendance à franchir le seuil critique de résilience des coraux.
 
-Il est interessant de noter qu'avec un effort de peche plus important, la rugosité minimal pour une résilence des coraux augmente. De plus, un tendance générale soutient que plus l'impact est élver, plus il y a d'instabilité dans la situation des coraux.
+Un deuxieme élément interessant est qu'avec un effort de peche plus important, la rugosité minimal pour une résilence des coraux augmente. Ce phénomene est le meme qu'entre l'abondance des population porroquet et la rugosité des récif coralien minmal pour leur résilience mais au lieu que la limite soit atteint par une pertubation elle est naturellement atteint. Ainsi, avec effort de peche moyen, une rugosité de 1.1 ou 1.2 n'est pas assez pour soutenir la persistance des récif coralien.
 
-Dans le cas, 
+Un autre élément notable est que les trois simulations possèdent une large étendue d'écart-type, les écarts maximum allant jusqu'à 30% pour une même simulation. Un étendue large d'écartype démontre une intabilité au niveau des population avec les même condition de départ. Toutefois, il est possible d'atribuer cette divergence au ouragan qui surviennent proche de la fin des simulation. Ainsi, dépendant quand l'ouragan survient et de la force de sont impact il y a beaucoup de scenario possible. Sinon, les autre zone d'instabilité sont des zone proche des limite de rugosité necessaire pour la résilence de coraux. Ces zones peuvent avec un peu de chance etre des situation favorable au corail ou défavoral avec moins de chance d'ou l'instabilité. 
+
+Un dernier éléments soulignier est la présence d'un état stable de la rugosité, commun aux trois niveaux d'effort de pêche, indépendamment de la rugosité initiale. Bien que les zones d'instabilité liées aux limites de rugosité nécessaires à la résilience des coraux persistent en fonction de l'abondance des poissons-perroquets, chaque situation présente cet état stable de rugosité. La meilleure explication de ce phénomène réside probablement dans notre formule d'impact des ouragans sur la rugosité. En effet, plus la rugosité est élevée, plus elle est susceptible d'être affectée, conduisant ainsi à l'établissement un maximum de rugosité moyenne. 
+
+Dans des recherche futur, il serait interessant d'explorer d'autre stresse qui pourrait avoir plus d'impact sur les dynamique de population que les ouragan qui on montrer un effet notable a des niveau tres élever de peche. 
 
 # Référence
