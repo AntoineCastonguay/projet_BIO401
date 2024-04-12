@@ -272,9 +272,9 @@ graph.imageCIR <- function(fishing,freq,it=10,pas=0.1){
              xlab = "Impact", ylab = "Rugosité initiale",
              main=c("Écart-type de C finale",paste(c("fréq:1/",1/l,", effort de pêche:",f0),collapse = "")))
 }
-graph.imageCIR(fishing = 0.1, freq = 1/15, it=2, pas = 0.5)
-graph.imageCIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
-graph.imageCIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
+graph.imageCIR(fishing = 0.1, freq = 1/15, it=10, pas = 0.1)
+graph.imageCIR(fishing = 0.4, freq = 1/15, it=10, pas = 0.1)
+graph.imageCIR(fishing = 0.7, freq = 1/15, it=10, pas = 0.1)
 ```
 
 Un premier élément à noter est qu'une tendance générale peut être observée dans le graphique présentant l'état du corail, indiquant que plus l'impact est élevé, plus la situation des coraux est instable. Cette observation s'observe aussi dans les graphiques qui représentent les écarts-types. D'ailleurs, on peut noter que l'étendue des écarts-types est large. Pour une même simulation, les écarts maximum peuvent aller jusqu'à 30%. D’autre part, il est intéressant de noter qu'avec un effort de pêche plus important, la rugosité minimale pour une résilience des coraux augmente. 
@@ -314,9 +314,9 @@ graph.imageRIR <- function(fishing,freq,it=10,pas=0.1){
              xlab = "Impact", ylab = "Rugosité initiale",
              main=c("Écart-type de R finale",paste(c("fréq:1/",1/l,", effort de pêche:",f0),collapse = "")))
 }
-graph.imageRIR(fishing = 0.1, freq = 1/15, it=2, pas = 0.5)
-graph.imageRIR(fishing = 0.4, freq = 1/15, it=2, pas = 0.5)
-graph.imageRIR(fishing = 0.7, freq = 1/15, it=2, pas = 0.5)
+graph.imageRIR(fishing = 0.1, freq = 1/15, it=10, pas = 0.1)
+graph.imageRIR(fishing = 0.4, freq = 1/15, it=10, pas = 0.1)
+graph.imageRIR(fishing = 0.7, freq = 1/15, it=10, pas = 0.1)
 
 ```
 

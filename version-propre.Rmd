@@ -494,15 +494,15 @@ rugfin<-as.data.frame(matrix(0,nrow = 3, ncol = 3))
 colnames(rugfin)<-c("1/9 ans", "1/15 ans", "1/30 ans")
 rownames(rugfin)<-c(1,2,3)
 
-rugfin[,1]<-c(graph.imageR(1,1/9,10,0.1,F,T),
-              graph.imageR(2,1/9,10,0.1,F,T),
-              graph.imageR(3,1/9,10,0.1,F,T))
-rugfin[,2]<-c(graph.imageR(1,1/15,10,0.1,F,T),
-              graph.imageR(2,1/15,10,0.1,F,T),
-              graph.imageR(3,1/15,10,0.1,F,T))
-rugfin[,3]<-c(graph.imageR(1,1/30,10,0.1,F,T),
-              graph.imageR(2,1/30,10,0.1,F,T),
-              graph.imageR(3,1/30,10,0.1,F,T))
+rugfin[,1]<-c(graph.imageR(1,1/9,5,0.1,F,T),
+              graph.imageR(2,1/9,5,0.1,F,T),
+              graph.imageR(3,1/9,5,0.1,F,T))
+rugfin[,2]<-c(graph.imageR(1,1/15,5,0.1,F,T),
+              graph.imageR(2,1/15,5,0.1,F,T),
+              graph.imageR(3,1/15,5,0.1,F,T))
+rugfin[,3]<-c(graph.imageR(1,1/30,5,0.1,F,T),
+              graph.imageR(2,1/30,5,0.1,F,T),
+              graph.imageR(3,1/30,5,0.1,F,T))
 
 # Définir les catégories
 categories <- c("Faible", "Modéré", "Important")
