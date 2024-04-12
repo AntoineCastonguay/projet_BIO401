@@ -1,5 +1,5 @@
 ---
-title: "Projet BIO401"
+title: "Projet BIO401-Partie 1"
 author: "AmigoTeam"
 date: "2024-04-07"
 output: html_document
@@ -7,19 +7,19 @@ output: html_document
 
 #### Article de référence : Blackwood, J.C., Hastings, A. and Mumby, P.J. (2011), A model-based approach to determine the long-term effects of multiple interacting stressors on coral reefs. Ecological Applications, 21: 2722-2733. https://doi.org/10.1890/10-2195.1
 
-###### Les analyse du modele ont été fait par : Antoine Castonguay et Félix Richard
+###### Les analyses du modèle ont été faites par : Antoine Castonguay et Félix Richard
 
 ## Partie 1 :
 
 ### Question biologique : 
 
-Comment la résilience des récifs coralliens soit la capacité a ne pas s'effondre suite a un stresse ou un pertubation varie-t-elle selon l'effort de pêche, l'impact des ouragans et la rugosité intiale?
+Comment la résilience des récifs coralliens, soit la capacité à ne pas s'effondrer suite a un stresse ou une perturbation varie-t-elle selon l'effort de pêche, l'impact des ouragans et la rugosité initiale?
 
 ### Hypothèse :
 
-1. La résilience diminue quand l'effort de peche augmente.  
-2. La résilience diminue quand les ouragan sont plus fréquence. 
-3. La résilience diminue quand les ouragan sont plus puissants.  
+1. La résilience diminue quand l'effort de pêche augmente.  
+2. La résilience diminue quand les ouragans sont plus fréquence. 
+3. La résilience diminue quand les ouragans sont plus puissants.  
 4. La résilience diminue quand la rugosité est faible.  
 
 ### Données :  
@@ -28,11 +28,11 @@ Comment la résilience des récifs coralliens soit la capacité a ne pas s'effon
 | Paramètre | Valeur | Définition |
 |:--:|:----:|:--------------|
 | s         | 0.49   | Taux de croissance des poisson perroquets par année |
-| r         | 1      | Taux pour lequel le corail remplace le gazon d'algue par année (Taux de coissance du corail) |
-| a         | 0.1    | Taux pour lequel les macroalgues remplace le corail par année |
-| gamma     | 1.6,0.8| Taux pour lequel les macroalgues remplace le gazon d'algue par année |
+| r         | 1      | Taux pour lequel le corail remplace le gazon d'algue par année|
+| a         | 0.1    | Taux pour lequel les macroalgues remplacent le corail par année |
+| gamma     | 1.6,0.8| Taux pour lequel les macroalgues remplacent le gazon d'algue par année |
 | d         | 0.44   | Taux de mortalité du corail par année |
-| Alpha     | 1      | Taux de broutage maximale par le poisson perroquet |
+| Alpha     | 1      | Taux de broutage maximal par le poisson perroquet |
 | f         | variable| Effort de pêche en pourcentage |
 | c1,c2     | 3.65,-3.21| Détermine la relation entre la complexité du corail et la capacité de support du poisson perroquet |
 | delta,v   | 4.557,0.9877| Détermine la relation entre la nourriture disponible et la capacité de support du poisson perroquet |
@@ -41,41 +41,41 @@ Comment la résilience des récifs coralliens soit la capacité a ne pas s'effon
 | hE        | 0.01   | Érosion de la complexité du corail par année |
 | kmax      | 17.745 | Limite supérieure d'abondance des poisson perroquets |
 | F()       | 0.0512 + 0.0176*te, 0| La proportion de la couverture corallienne affectée par un ouragan respectivement fort/moyen et faible |
-| G()       | 0.5, F, 0.05| La proportion attendue de rugosité affectée par les impacts des ouragans respectivement fort, moyen et faible |
+| G()       | 0.5, F, 0.05| La proportion attendue de rugosités affectée par les impacts des ouragans respectivement fort, moyenne et faible |
 | mH        | 0.8    | Taux de mortalité des macroalgues suite à un ouragan |
 | te        | variable| Temps écoulé depuis le dernier ouragan en année |
 | sigma     | 0.05   | Écart maximal de la variabilité des impacts des ouragans d'epsilon |
 | epsilon   | entre 0 et 1| Variable aléatoire suivant une distribution normale standard qui décrit la composante aléatoire des impacts des ouragans sur le corail |
 
-#### Tableau 2 : Variables utilisées dans le modèle de référence avec leur définition anisi que leurs limites.
+#### Tableau 2 : Variables utilisées dans le modèle de référence avec leur définition ainsi que leurs limites.
 | Variable | Valeurs possibles | Définition |
 |:--:|:----:|:--------------|
-| C | entre 0 et 1 | Correspond à la proportion de couverture du paysage par le corail. Où 1 est un couvert total et où 0 est l'absence de corail. |
-| M | entre 0 et 1 | Correspond à la proportion de couverture du paysage par les macroalgues. Où 1 est un couvert total et où 0 est l'absence des macroalgue. |
-| P | entre 0 et 1 | Correspond à la taille de population des poisson perroquets relativement à leur capacité de soutien. Vaut 1 lorsque la capacité de support est atteinte et 0 si les poissons perroquets sont absents |
-| R | entre 1 et 3 | Correspond à la rugosité des récifs coralliens, où 1 équivaut à une structure parfaitement lisse et où 3 représente une complexité tridimensionelle prononcée, rarement atteinte, qui offrant une très bonne qualité d'habitat. |
-| Y | entre 0 et 1 | Correspond à la proportion de couverture du paysage par du gazon d'algue, remplit l'espace inoccupé par le corail ou les macroalgues. |
+| C | entre 0 et 1 | Corresponds à la proportion de couverture du paysage par le corail. Où 1 est un couvert total et où 0 est l'absence de corail. |
+| M | entre 0 et 1 | Corresponds à la proportion de couverture du paysage par les macroalgues. Où 1 est un couvert total et où 0 est l'absence des macroalgues. |
+| P | entre 0 et 1 | Corresponds à la taille de population des poisson perroquets relativement à leur capacité de soutien. Il vaut 1 lorsque la capacité de support est atteinte et il vaut 0 si les poissons-perroquets sont absents. |
+| R | entre 1 et 3 | Corresponds à la rugosité des récifs coralliens, où 1 équivaut à une structure parfaitement lisse et où 3 représente une complexité tridimensionnelle prononcée, rarement atteinte, qui offrant une très bonne qualité d'habitat. |
+| Y | entre 0 et 1 | Corresponds à la proportion de couverture du paysage par du gazon d'algue. Remplis l'espace inoccupé par le corail ou les macroalgues. |
 </div>
 
 ### Méthode :
 
-Modèle rugosité fixe:  
+Modèle de rugosité fixe:  
 
 $\frac{dC}{dt} = \small{rTC - dC - aMC}$   
 $\frac{dM}{dt} = \small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY}$  
 $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$  
 $\frac{dY}{dt} = \small{1 - M - C}$  
 
-La capacité de support de l'environnement pour le poisson perroquets prend en compte l'abondance des algues, qui constituent leur nourriture, ainsi que la rugosité, qui constitue de l'habitat K(M + T, R).  
+La capacité de support de l'environnement pour le poisson perroquet prend en compte l'abondance des algues, qui constituent leur nourriture, ainsi que la rugosité, qui constitue de l'habitat K(M + T, R).  
 $\small{K(M+T,R) = }\frac{(c1R + c2)}{K_{max}}\frac{\delta(M+Y)}{1 + v(M+Y)}$
 
-Modèle Nondimentionner par rapport taux de croissance des poisson perroquet par année avec rugosité fixe:  
+Modèle Nondimentionner par rapport aux taux de croissance des poisson perroquets par année avec rugosité fixe:  
 $\frac{dC}{dts} = (\small{rTC - dC - aMC})\frac{1}{s}$   
 $\frac{dM}{dts} = (\small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY})\frac{1}{s}$   
 $\frac{dP}{dts} = \small{P(1 -} \frac{P}{\beta K(M+T,R)} \small{ - fP}$  
 $\frac{dY}{dts} = \small{1 - M - C}$  
 
-Modèle avec un rugosité variable:  
+Modèle avec une rugosité variable:  
 $\frac{dC}{dt} = \small{rTC - dC - aMC}$   
 $\frac{dM}{dt} = \small{aMC} - \frac{\alpha \frac{P}{\beta}M}{M + Y} - \small{\gamma MY}$  
 $\frac{dP}{dt} = \small{sP(1 -} \frac{P}{\beta K(M+T,R)} \small{ - sfP}$  
@@ -83,33 +83,32 @@ $\frac{dR}{dt} = \small{h_GC(3-R) - h_E(1-C)(R-1)}$
 $\frac{dY}{dt} = \small{1 - M - C}$ 
 
 Mise en œuvre d'un ouragan stochastique:  
->>>>>>> 16ac0c38c333d22f9eb07e8351ac62ae63201eac
 $\small{dC = g_C(C,M,P,R,t)dt - C(F() + \sigma \epsilon)dq}$  
 $\small{dM = g_M(C,M,P,R,t)dt - Mm_Hdq}$  
 $\small{dP = g_P(C,M,P,R,t)dt}$  
 $\small{dR = g_R(C,M,P,R,t)dt - (R-1)(G() + \sigma \epsilon)dq}$  
 $\small{dY = 1 - M - C}$  
 
-$\small{F() = 0.0512 + 0.0176*te}$ avec un maximun de F() = 0.5.
+$\small{F() = 0.0512 + 0.0176*te}$ avec un maximum de F() = 0.5.
 G() est soit 0.5 pour
 
 où $\small{g_C(C,M,P,R,t),g_M(C,M,P,R,t),g_P(C,M,P,R,t),g_R(C,M,P,R,t)}$ sont des fonctions qui represente le modèle avec avec un rugosité variable.  
 Et où q est un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.  
 
 ### Supposition :
-1. Aucun changement dans la température, la chimie de l'eau ou l'élévation du niveau de la mer est significatif sur l'echelle du temps étudier.  
-2. Les perturbations ou stresse des récifs coralliens autres que les ouragans, les impacts indirects de la pêche ou la compétition de l'espace avec les macroalgues ne sont pas pris en compte.  
-3. L'effort de pêche est constant pour toute les années de la simulation.  
-4. Après un oragan, le gazon d'algues colonise immédiatement tout l'espace libre.  
-5. Le gazon d'algue correspond a tout la surface qui n'est pas des coraux ou des macroalgue.
+1. Aucun changement dans la température, la chimie de l'eau ou l'élévation du niveau de la mer n’est significatif sur l'échelle du temps étudier.  
+2. Les perturbations ou stress des récifs coralliens autres que les ouragans, les impacts indirects de la pêche ou la compétition de l'espace avec les macroalgues ne sont pas pris en compte.  
+3. L'effort de pêche est constant pour toutes les années de la simulation.  
+4. Après un ouragan, le gazon d'algues colonise immédiatement tout l'espace libre.  
+5. Le gazon d'algue correspond à toute la surface qui n'est pas des coraux ou des macroalgues.
 6. Les ouragans n'ont pas d'effets directs significatifs sur l'abondance ou la croissance des poisson perroquets.  
-7. Les macroalgues on le même niveau de dommage peu importe le niveau d'impact des ouragan.  
-8. Les ouragans ont un impact et une féquense constante sur toute la duré de la simulation.  
-9. Les effets des ouragans sont immédiat sur les population de l'écosystème.
-10. La distribution des coraux, des algues macroscopiques et des poissons perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
-11. Un ouragan affecte l'ensemble de l'écosysteme de facon égale. 
-12. Les ouragan suit un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.
-13. Tous les parametres du modele sont représentatif de la situation réel de l'écosysteme.
+7. Les macroalgues ont le même niveau de dommage, peu importe le niveau d'impact des ouragans.  
+8. Les ouragans ont un impact et une fréquence constante sur toute la durée de la simulation.  
+9. Les effets des ouragans sont immédiats sur les populations de l'écosystème.
+10. La distribution des coraux, des algues macroscopiques et des poissons-perroquets dans l'espace n'a pas d'impact sur leur dynamique. 
+11. Un ouragan affecte l'ensemble de l'écosystème de façon égale. 
+12. Les ouragans suit un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.
+13. Tous les paramètres du modèle sont représentatifs de la situation réelle de l'écosystème.
 14. Il est impossible pour le corail et les macroalgues de s'éteindre totalement.
 
 ### Calcul :
@@ -222,7 +221,7 @@ for (j in seq(3,9,by=3)) {
 }
 ```
 
-Pour construire les graphiques du couvert de corail final moyen et de la rugosité finale moyenne selon la rugosité initiale et l'effort de pêche, nous avons utilisé la fonction suivante. Elle inclut l'incidence aléatoire d'ouragan avec différentes gravités d'impacts définis, et occurant à différentes fréquences moyennes. Les catégories d'impacts sont faibles (1), modérés (2) et importants (3) et les différentes fréquences moyennes sont 1 fois par 9 ans (1/9), une fois par 15 ans (1/15) et une fois par 30 ans (1/30).
+Pour construire les graphiques du couvert de corail final moyen et de la rugosité finale moyenne selon la rugosité initiale et l'effort de pêche, nous avons utilisé la fonction suivante. Elle inclut l'incidence aléatoire d'ouragan avec différentes gravités d'impacts définis, et occupant à différentes fréquences moyennes. Les catégories d'impacts sont faibles (1), modérées (2) et importantes (3) et les différentes fréquences moyennes sont 1 fois par 9 ans (1/9), une fois par 15 ans (1/15) et une fois par 30 ans (1/30).
 
 ```{r, eval=F}
 corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1,graph=FALSE){
@@ -453,7 +452,7 @@ graph.imageR(2,1/9,10,1)
 
 ### Résultat :
 
-Dans la figure 1, on réprésente les zones d'instabilités entre les populations de macroalgue et le corail. Ainsi, pour chaque rugosité fixe, on regarde pour chaque effore de peche s'il y a une dominance du corail ou un domninance des macroalgue ou aucune domination. Cette zone qui n'a aucune domination représente la limite de l'effort de pêche pour une rugosité donner. 
+Dans la figure 1, on représente les zones d'instabilités entre les populations de macroalgue et le corail. Ainsi, pour chaque rugosité fixe, on regarde pour chaque effort de pêche s'il y a une dominance du corail ou une dominance des macroalgues ou aucune domination. Cette zone qui n'a aucune domination représente la limite de l'effort de pêche pour une rugosité donner. 
 
 ```{r, eval=F}
 # Affichage pour figure 1
@@ -470,7 +469,7 @@ image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(40),
       xlab = "fishing effort", ylab = "R", main = "Graphique",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
 ```
 
-Affichage des graphique des valeur d'équilibre apres 30 ans de la couverture corallienne en fonction de l'effort de pêche par rapport au taux de croissance des poissons-perroquets (f) pour différentes valeurs de rugosité (R) afin de démontrer les implications de l'effort de pêche sur la couvuture des récif corailien.
+Dans la figure 2, affichage des graphiques des valeurs d'équilibre après 30 ans de la couverture corallienne en fonction de l'effort de pêche par rapport au taux de croissance des poissons-perroquets (f) pour différentes valeurs de rugosité (R) afin de démontrer les implications de l'effort de pêche sur la couverture des récifs coralliens.
 
 ```{r, eval=F}
 # Affichage pour figure 2
@@ -493,7 +492,7 @@ graph.imageC(2,1/30,10,1)
 graph.imageC(2,1/9,10,1)
 ```
 
-On peut ensuite bâtir un graphique avec la valeur maximale de rugosité finale pour chacune des 9 simulations possibles d'impact et de fréquence variées:
+On peut ensuite bâtir un graphique avec la valeur maximale de rugosité finale pour chacune des 9 simulations possibles d'impact et de fréquence variés:
 
 ```{r, eval=F}
 rugfin<-as.data.frame(matrix(0,nrow = 3, ncol = 3))
@@ -536,7 +535,7 @@ legend("topright", legend = c("/9 ans", "/15 ans","/30 ans"),
        lwd = 1.5, bg = "white",cex = 0.65)
 ```
 
-###Interprétation : 
+### Interprétation : 
 
-Après analyse des résultats, on remarque facilement que la pêche est le facteur qui a l'effet le plus clair sur le corail, réduisant grandement la possibilité que le corail se rétablisse. Il semble que le couvert de corail soit légèrement moins résilient à la pêche quand les ouragans sont moins fréquents et de faible intensité, mais cette tendance s'inverse quand les impacts sont modérés ou importants. La rugosité, elle, arrive aussi, semble supporter de plus grands niveaux de pêche sans s'effondrer quand les ouragans sont plus fréquents quand l'impact est faibles, bien que cette tendance semble s'estomper quand l'impact augmente. Toutefois quand les ouragans sont moins fréquents et violents et que l'effort de pêche est assez bas, la rugosité et le couvert de corail se rétablit à des niveaux plus hauts. Ces résultats pointent vers l'importance de considérer l'application de mesures de restriction à la pêche dans les zones ou les ouragans sont moins fréquents et/ou plus violents, car le corail est plus fragile dans ces endroits et car le gain d'une petite réduction de l'effort de pêche peut permettre une amélioration importante de l'état du corail, donc une meilleure efficacité de conservation. 
+Après analyse des résultats, on remarque facilement que la pêche est le facteur qui a l'effet le plus clair sur le corail, réduisant grandement la possibilité que le corail se rétablisse. Il semble que le couvert de corail soit légèrement moins résilient à la pêche quand les ouragans sont moins fréquents et de faible intensité, mais cette tendance s'inverse quand les impacts sont modérés ou importants. La rugosité, elle, arrive aussi, semble supporter de plus grands niveaux de pêche sans s'effondrer quand les ouragans sont plus fréquents quand l'impact est faible, bien que cette tendance semble s'estomper quand l'impact augmente. Toutefois, quand les ouragans sont moins fréquents et violents et que l'effort de pêche est assez bas, la rugosité et le couvert de corail se rétablissent à des niveaux plus hauts. Ces résultats pointent vers l'importance de considérer l'application de mesures de restriction à la pêche dans les zones où les ouragans sont moins fréquents et/ou plus violents, car le corail est plus fragile dans ces endroits et, car le gain d'une petite réduction de l'effort de pêche peut permettre une amélioration importante de l'état du corail, donc une meilleure efficacité de conservation. 
 
