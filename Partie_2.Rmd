@@ -334,6 +334,6 @@ Un autre élément notable est que les trois simulations possèdent une large é
 
 Un dernier élément soulignés est la présence d'un état stable de la rugosité, commun aux trois niveaux d'effort de pêche, indépendamment de la rugosité initiale. Bien que les zones d'instabilité liées aux limites de rugosité nécessaires à la résilience des coraux persistent en fonction de l'abondance des poissons-perroquets, chaque situation présente le même état stable de rugosité. L'explication de ce phénomène repose sur la valeur de R à l'équilibre soit 2.58 dans une situation où le corail atteint l'équilibre (0.56). Ce qui est toutefois intéressant à noter, c'est qu'il n'y a pas d'effet perceptible selon la rugosité au-delà du seuil minimal. Selon notre formule, on aurait pu s'attendre à ce que les coraux plus complexes soient plus durement touchés, mais aucun effet notable n'est observé. Cela peut s'expliquer par la valeur d'équilibre de la rugosité. Cette fonction de dommage pourrait contribuer à l'atteindre, car il y a moins de dommages à mesure que la rugosité diminue. 
 
-Dans des recherches futures, il serait intéressant d'explorer d'autre stress qui pourrait avoir plus d'impact sur les dynamiques de population que les ouragans qui ont montré un effet notable ont des niveaux très élevés de pêche. 
+Dans des recherches futures, il serait intéressant d'explorer d'autre stress qui pourrait avoir plus d'impact sur les dynamiques de population que les ouragans qui ont montré un effet notable seulement à des niveaux élevés de pêche. 
 
 ## Référence
