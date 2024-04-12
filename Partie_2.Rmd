@@ -114,9 +114,9 @@ Pour le modèle que nous proposons, la première modification apportée est que 
 
 Une autre modification que nous avons apportée au modèle est une forme d'accélération du rythme auquel la valeur de F augmente. Avec les années qui passent, nous supposons que les dégâts des ouragans deviendront plus grave plus rapidement en fonction du temps écoulé depuis le dernier ouragan, à cause des changements climatiques. Ainsi, si au début de la simulation, il faut 25.5 années pour que F atteigne son maximum à 0.5, graduellement cette période sera raccourcie pour être de seulement 17 années à la fin. Les équations déterminant le dommage à chaque composante du système lors d'un ouragan est donc défini par les équations suivantes:
 
-+ $dC=C\times (F+ \sigma \epsilon)\times (2\times i-0.5)$ où on pose que si $dC<0$, alors $dC=0$
-+ $dM=M\times m_H\times(0.5\times i+0.75)$
-+ $dR=(R-1)\times(G + \sigma\epsilon)\times(2.25\times i+0.25)$ où $G=0.1\times (R-1)$
++ $dC=-C\times (F+ \sigma \epsilon)\times (2\times i-0.5)$ où on pose que si $dC<0$, alors $dC=0$
++ $dM=-M\times m_H\times(0.5\times i+0.75)$
++ $dR=-(R-1)\times(G + \sigma\epsilon)\times(2.25\times i+0.25)$ où $G=0.1\times (R-1)$
 + $F(t_e)=0.0512+0.0176\times t_e\times(1+t/200)$ où si $F(t_e)>0.5$ alors $F(t_e)=0.5$
 
 Tout comme dans le modèle de @blackwood_model-based_2011, l'évènement d'un ouragan est déterminé par un tirage aléatoire dans une distribution de poisson à moyenne $\lambda$, ce tirage offre donc une probabilité $\lambda \times dt$ qu'un ouragan arrive (si le résultat du tirage est >0) pour chaque pas de temps.
