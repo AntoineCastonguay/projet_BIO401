@@ -113,13 +113,13 @@ Et où q est un processus de saut de Poisson avec un taux de saut λ tel que dq 
 
 ### Calcul :
 
-```{r, eval=F}
+```{r}
 # Chargement de librairie
 library(deSolve)
 library(viridis)
 ```
 
-```{r, eval=F}
+```{r}
 # Fonction pour le modele nondimentionner par rapport taux de croissance des poisson perroquet par année avec rugosité fixe : 
 interaction_coral <- function(t, vars, parms){
   with(as.list(c(parms, vars)), {
@@ -160,7 +160,7 @@ dessinSol <- function(ic=c(M=0.001,C=0.56,P=0.75),
 }
 ```
 
-```{r, eval=F}
+```{r}
 # Code pour figure 1
 # Matrice des valeur finale de la proportion de corail apres "times" ans
 coral <- matrix(data = NA, nrow = 41, ncol = 41)
@@ -194,7 +194,7 @@ for (i in 1:41) {
 }
 ```
 
-```{r, eval=F}
+```{r}
 # code pour figure de 2
 # Différent état de rugosité de départ 
 rug.vec <- c(1.8,2.1,2.4)
@@ -223,7 +223,7 @@ for (j in seq(3,9,by=3)) {
 
 Pour construire les graphiques du couvert de corail final moyen et de la rugosité finale moyenne selon la rugosité initiale et l'effort de pêche, nous avons utilisé la fonction suivante. Elle inclut l'incidence aléatoire d'ouragan avec différentes gravités d'impacts définis, et occupant à différentes fréquences moyennes. Les catégories d'impacts sont faibles (1), modérées (2) et importantes (3) et les différentes fréquences moyennes sont 1 fois par 9 ans (1/9), une fois par 15 ans (1/15) et une fois par 30 ans (1/30).
 
-```{r, eval=F}
+```{r}
 corailstochastique <- function (R0,f,lambda=1/30,impact=2,dt=1,graph=FALSE){
   #on instaure une étendue de temps
   tmax <- 100
@@ -353,7 +353,7 @@ corailstochastique(R0=2.2, f= 0.5, lambda = 1/15,impact = 2,dt=0.1,graph = T)
 
 On peut ensuite construire les graphiques du couvert de corail final moyen ainsi que l'écart-type pour un éventail de rugosité initiale entre 1 et 3 et d'effort de pêche entre 0 et 1. La fonction utilisée pour cela est la suivante:
 
-```{r, eval=F}
+```{r}
 
 library(fields)
 graph.imageC <- function(impact,freq,it=10,pas=0.1){
@@ -402,7 +402,7 @@ graph.imageC <- function(impact,freq,it=10,pas=0.1){
 
 Idem pour la moyenne ainsi que l'écart-type de la rugosité. La fonction utilisée pour cela est la suivante (ce sont les mêmes étapes que pour graph.imageC, seulement avec [2] pour obtenir la rugosité finale pour `corailstochastique()`, les étapes ne sont donc pas commentées) et les 2 mêmes simulations sont montrées à la fin:
 
-```{r,fig.dim=c(12,5), eval=F}
+```{r,fig.dim=c(12,5)}
 graph.imageR <- function(impact,freq,it=10,pas=0.1, graph=T, max=F){
   
   matC <- matrix(0, nrow = 21,ncol = 26)
@@ -445,16 +445,13 @@ graph.imageR <- function(impact,freq,it=10,pas=0.1, graph=T, max=F){
   }
 }
 
-graph.imageR(2,1/30,10,1)
-graph.imageR(2,1/9,10,1)
-
 ```
 
 ### Résultat :
 
 Dans la figure 1, on représente les zones d'instabilités entre les populations de macroalgue et le corail. Ainsi, pour chaque rugosité fixe, on regarde pour chaque effort de pêche s'il y a une dominance du corail ou une dominance des macroalgues ou aucune domination. Cette zone qui n'a aucune domination représente la limite de l'effort de pêche pour une rugosité donner. 
 
-```{r, eval=F}
+```{r}
 # Affichage pour figure 1
 # Définition des noms de lignes et de colonnes
 row_names <- paste(seq(1, 3, by = (2 / 40)))
@@ -466,12 +463,12 @@ colnames(coral) <- col_names
 
 # Créer le graphique avec la matrice en tant que données
 image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(40),
-      xlab = "fishing effort", ylab = "R", main = "Graphique",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
+      xlab = "effort de pêche", ylab = "R", main = "Graphique de C finale",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
 ```
 
 Dans la figure 2, affichage des graphiques des valeurs d'équilibre après 30 ans de la couverture corallienne en fonction de l'effort de pêche par rapport au taux de croissance des poissons-perroquets (f) pour différentes valeurs de rugosité (R) afin de démontrer les implications de l'effort de pêche sur la couverture des récifs coralliens.
 
-```{r, eval=F}
+```{r}
 # Affichage pour figure 2
 par(mfrow=c(1,3))
 plot(x = fish.vec[,1], y = fish.vec[,2],type = "l",ylim = c(0,0.7),xlab = "fishing effort", ylab = "Proportion de Corail apres 30 ans", main = paste("Graphique R =", rug.vec[1]))
@@ -487,27 +484,27 @@ par(mfrow=c(1,1))
 
 On peut ainsi visualiser le résultat pour les 2 situations suivantes, par exemple: la simulation avec ouragans à impacts modérés (2) d'une fréquence faible (30 ans) et la simulation avec ouragans à impacts modérés (2) d'une fréquence élevée:
 
-```{r, fig.dim=c(12,5), eval=F}
-graph.imageC(2,1/30,10,1)
-graph.imageC(2,1/9,10,1)
+```{r, fig.dim=c(12,5)}
+graph.imageC(2,1/30,10,0.1)
+graph.imageC(2,1/9,10,0.1)
 ```
 
 On peut ensuite bâtir un graphique avec la valeur maximale de rugosité finale pour chacune des 9 simulations possibles d'impact et de fréquence variés:
 
-```{r, eval=F}
+```{r}
 rugfin<-as.data.frame(matrix(0,nrow = 3, ncol = 3))
 colnames(rugfin)<-c("1/9 ans", "1/15 ans", "1/30 ans")
 rownames(rugfin)<-c(1,2,3)
 
-rugfin[,1]<-c(graph.imageR(1,1/9,5,0.25,F,T),
-              graph.imageR(2,1/9,5,0.25,F,T),
-              graph.imageR(3,1/9,5,0.25,F,T))
-rugfin[,2]<-c(graph.imageR(1,1/15,5,0.25,F,T),
-              graph.imageR(2,1/15,5,0.25,F,T),
-              graph.imageR(3,1/15,5,0.25,F,T))
-rugfin[,3]<-c(graph.imageR(1,1/30,5,0.25,F,T),
-              graph.imageR(2,1/30,5,0.25,F,T),
-              graph.imageR(3,1/30,5,0.25,F,T))
+rugfin[,1]<-c(graph.imageR(1,1/9,10,0.1,F,T),
+              graph.imageR(2,1/9,10,0.1,F,T),
+              graph.imageR(3,1/9,10,0.1,F,T))
+rugfin[,2]<-c(graph.imageR(1,1/15,10,0.1,F,T),
+              graph.imageR(2,1/15,10,0.1,F,T),
+              graph.imageR(3,1/15,10,0.1,F,T))
+rugfin[,3]<-c(graph.imageR(1,1/30,10,0.1,F,T),
+              graph.imageR(2,1/30,10,0.1,F,T),
+              graph.imageR(3,1/30,10,0.1,F,T))
 
 # Définir les catégories
 categories <- c("Faible", "Modéré", "Important")
