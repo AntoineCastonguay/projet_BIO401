@@ -90,7 +90,7 @@ $\small{dR = g_R(C,M,P,R,t)dt - (R-1)(G() + \sigma \epsilon)dq}$
 $\small{dY = 1 - M - C}$  
 
 $\small{F() = 0.0512 + 0.0176*te}$ avec un maximum de F() = 0.5.
-G() est soit 0.5 pour
+G() est soit 0.5 pour un impact élever, F() pour un impact moyen et 0.05 pour un impact faible.
 
 où $\small{g_C(C,M,P,R,t),g_M(C,M,P,R,t),g_P(C,M,P,R,t),g_R(C,M,P,R,t)}$ sont des fonctions qui represente le modèle avec avec un rugosité variable.  
 Et où q est un processus de saut de Poisson avec un taux de saut λ tel que dq = 0 avec une probabilité de 1 - λdt et dq = 1 avec une probabilité de λdt.  
