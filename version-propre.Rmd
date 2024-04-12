@@ -461,7 +461,7 @@ colnames(coral) <- col_names
 
 # Créer le graphique avec la matrice en tant que données
 image(1:nrow(coral), 1:ncol(coral), t(coral), col = plasma(40),
-      xlab = "effort de pêche", ylab = "R initiale", main = "Graphique de C finale selon la Rugosité initiale et l'effort de pêche après 30 ans",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
+      xlab = "effort de pêche", ylab = "R initiale", main = "Graphique de C finale selon la rugosité initiale et l'effort de pêche",axes=F);axis(side = 1, at = 1:ncol(coral), labels = col_names);axis(side = 2, at = 1:nrow(coral), labels = row_names)
 ```
 
 Dans la figure 2, affichage des graphiques des valeurs d'équilibre après 30 ans de la couverture corallienne en fonction de l'effort de pêche par rapport au taux de croissance des poissons-perroquets (f) pour différentes valeurs de rugosité (R) afin de démontrer les implications de l'effort de pêche sur la couverture des récifs coralliens.
